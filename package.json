@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "AGPL-3.0-only",
   "description": "openIMIS Frontend Template module",
-  "repository": "openimis/openimis-fe-claim_js",
+  "repository": "openimis/openimis-fe-template_js",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
