@@ -8,3 +8,4 @@ The module is built with [rollup](https://rollupjs.org/).
 In development mode, you can use `yarn link` and `yarn start` to continuously scan for changes and automatically update your development server.
 
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/openimis/openimis-fe-template_js.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/openimis/openimis-fe-template_js/alerts/)
