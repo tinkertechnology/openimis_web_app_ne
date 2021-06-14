@@ -1,2 +1,6 @@
 {
+    "my_module.mainMenu" : "My Module transaltion",
+    "my_module.notices" : "Notices",
+    "my_module.NoticePage.Header" : "ALL NOTICES",
+    "my_module.notices_table.count" : "Published Notices ({count})"
 }
