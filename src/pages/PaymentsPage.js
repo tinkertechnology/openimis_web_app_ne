@@ -14,7 +14,7 @@ const styles = theme => ({
 });
 
 
-class NoticesPage extends Component{
+class PaymentsPage extends Component{
 
     state = {
         page: 0,
@@ -58,7 +58,7 @@ class NoticesPage extends Component{
             this.setState((state, props) => ({
                 page: state.page+1,
                 beforeCursor: null,
-                afterCursor: props.noticesPageInfo.endCursor
+                afterCursor: props.PaymentsPageInfo.endCursor
             }),
             e=> this.query()
             )
@@ -67,7 +67,7 @@ class NoticesPage extends Component{
             if(nbr < this.state.page){
                 this.setState( (state,props)=>({
                     page:state.page-1,
-                    beforeCursor : props.noticesPageInfo.startCursor,
+                    beforeCursor : props.PaymentsPageInfo.startCursor,
                     afterCursor : null
                 } ),
                 e => this.query()
@@ -79,7 +79,7 @@ class NoticesPage extends Component{
 
     render(){
 
-        const { fetchingNotices,classes, errorNotices, notices, noticesPageInfo} = this.props;
+        const { fetchingNotices,classes, errorNotices, notices, PaymentsPageInfo} = this.props;
         
         let headers = [
             "my_module.sn",
@@ -109,7 +109,7 @@ class NoticesPage extends Component{
           
             
         ]
-        var notice_header = "Published Notices"+noticesPageInfo.totalCount;
+        var notice_header = "Published Notices"+PaymentsPageInfo.totalCount;
 
         return (
         <div className={classes.page}>
@@ -124,7 +124,7 @@ class NoticesPage extends Component{
                   withPagination={true}
                   page = {this.state.page}
                   pageSize = {this.state.pageSize}
-                  count = {noticesPageInfo.totalCount }
+                  count = {PaymentsPageInfo.totalCount }
                   onChangePage={this.onChangePage}
                   onChangeRowsPerPage={this.onChangeRowsPerPage}
               />
@@ -138,14 +138,14 @@ const mapStateToProps = state => ({
     errorNotices : state.my_module.errorNotices,
     fetchedNotices : state.my_module.fetchedNotices,
     notices : state.my_module.notices,
-    noticesPageInfo : state.my_module.noticesPageInfo
+    PaymentsPageInfo : state.my_module.PaymentsPageInfo
 
 })
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({fetchNotices}, dispatch);
 }
 
-//export default withTheme(withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(NoticesPage)))
+//export default withTheme(withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(PaymentsPage)))
 export default injectIntl(withModulesManager(withHistory(connect(mapStateToProps, mapDispatchToProps)(
-    withTheme(withStyles(styles)(NoticesPage))
+    withTheme(withStyles(styles)(PaymentsPage))
 ))));
