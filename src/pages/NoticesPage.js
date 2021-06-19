@@ -2,7 +2,7 @@ import React, {Component} from "react"
 import {withTheme, withStyles} from "@material-ui/core/styles";
 import {connect} from "react-redux";
 import { bindActionCreators } from "redux";
-import {FormattedMessage, ProgressOrError, withModulesManager, withHistory, Table, FakeInput} from "@openimis/fe-core";
+import {FormattedMessage,TextInput, ProgressOrError, withModulesManager, withHistory, Table, FakeInput} from "@openimis/fe-core";
 import { fetchNotices } from "../actions";
 import { injectIntl } from 'react-intl';
 import {Keyboard, ScreenShare} from "@material-ui/icons";
@@ -21,6 +21,9 @@ class NoticesPage extends Component{
         pageSize : 10,
         afterCursor : null,
         beforeCursor : null,
+        edited: {
+            title: null
+        }
     }
 
     componentDidMount(){
@@ -30,6 +33,7 @@ class NoticesPage extends Component{
 
     query = () => {
         let prms = [];
+        prms.push(`title_Icontains: ${this.state.edited.title==null? "": this.state.edited.title}`);
         prms.push( `first: ${this.state.pageSize}`);
         if(!!this.state.afterCursor){
             prms.push(`after: "${this.state.afterCursor}"`)
@@ -76,8 +80,18 @@ class NoticesPage extends Component{
         }
     }
 
+    updateAttribute = (k,v) => {
+        this.setState((state)=> ({
+            edited: {...state.edited, [k]: v}
+        }),
+         e => this.query() //console.log('STATE' +JSON.stringify(this.state))
+         
+        )
+    }
+
 
     render(){
+        const {edited} = this.state;
 
         const { fetchingNotices,classes, errorNotices, notices, noticesPageInfo} = this.props;
         
@@ -114,7 +128,22 @@ class NoticesPage extends Component{
         return (
         <div className={classes.page}>
                 <ProgressOrError progress={fetchingNotices} error={errorNotices} />
-            <Paper className={classes.paper}>
+            
+            <Grid container>
+                    <Grid item>
+                        <TextInput
+                            module="my_module" label = "noticeForm.title"
+                            value={edited.title}
+                            required = {true}
+                            inputProps={{
+                                "maxLength": this.codeMaxLength,
+                            }}
+                            onChange={v=>this.updateAttribute("title", v)}
+                        />
+                    </Grid>
+            </Grid>
+            
+            
               <Table
                   module = "my_module"
                   header = {notice_header}
@@ -128,7 +157,7 @@ class NoticesPage extends Component{
                   onChangePage={this.onChangePage}
                   onChangeRowsPerPage={this.onChangeRowsPerPage}
               />
-            </Paper>
+            
         </div>
         )
     }

@@ -21,8 +21,13 @@ class MyModuleMainMenu extends Component {
             {
                 text: "Renewal Requests",
                 icon: <Keyboard />,
-                route: "/my_module/renewals"
-            }           
+                route: "/my_module/payments"
+            },
+            {
+                text: "Feedbacks",
+                icon: <Keyboard />,
+                route: "/my_module/feedbacks"
+            }             
         );
         if(!entries.length) return null;
         return(

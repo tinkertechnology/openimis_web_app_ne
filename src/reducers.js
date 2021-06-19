@@ -9,6 +9,18 @@ function reducer(
         fetchedNotices : false,
         notices : [],
         noticesPageInfo : {totalCount:0},
+
+        fetchingPayments :false,
+        errorPayments: null,
+        fetchedPayments : false,
+        payments : [],
+        paymentsPageInfo : {totalCount:0},
+
+        fetchingFeedbacks :false,
+        errorFeedbacks: null,
+        fetchedFeedbacks : false,
+        feedbacks : [],
+        feedbacksPageInfo : {totalCount:0},
     },
  
     action,
@@ -45,6 +57,36 @@ function reducer(
                     errorNotices: formatServerError(action.payload),
                 }
             }
+
+            case "FETCH_FEEDBACKS_REQ":
+                return{
+                     ...state,
+                     fetchingFeedbacks: true,
+                     fetchedFeedbacks: false,
+                     feedbacks: [],
+                     feedbacksPageInfo : {totalCount:0},
+                     errorNotices: null,
+                     
+                }
+             case "FETCH_FEEDBACKS_RESP":
+                 return {
+                     ...state,
+                     fetchingFeedbacks:false,
+                     fetchedFeedbacks: true,
+                     feedbacks : parseData(action.payload.data.feedbacks),
+                     feedbacksPageInfo : pageInfo(action.payload.data.feedbacks),
+                     errorFeedbacks: formatGraphQLError(action.payload),
+                     
+     
+                 }
+             case "FETCH_FEEDBACKS_ERR":
+                 {
+                     return {
+                         ...state,
+                         errorNotices: formatServerError(action.payload),
+                     }
+                 }
+        
         default:
             return state;
     }

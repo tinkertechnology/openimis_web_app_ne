@@ -1,6 +1,8 @@
 import { graphql, formatPageQuery, formatMutation, formatPageQueryWithCount} from "@openimis/fe-core";
 
 export function fetchNotices(prms){
+    console.log(prms)
+    $(!!prms.title_Icontains ? `"title_Icontains": "${prms.title_Icontains}"`: "")
     const payload = formatPageQueryWithCount(
         "notices",
         prms,
@@ -9,6 +11,16 @@ export function fetchNotices(prms){
     return graphql(payload, "FETCH_NOTICES")
 }
 
+export function fetchFeedbacks(prms){
+    console.log(prms)
+    // $(!!prms.title_Icontains ? `"title_Icontains": "${prms.title_Icontains}"`: "")
+    const payload = formatPageQueryWithCount(
+        "feedbacks",
+        prms,
+        ["fullname", "emailAddress","mobileNumber", "queries"]
+    );
+    return graphql(payload, "FETCH_FEEDBACKS")
+}
 
 //mutations
 
@@ -27,4 +39,14 @@ export function createNotice(notice){
             
         }
     )
+}
+
+
+export function fetchPayments(prms){
+    const payload = formatPageQueryWithCount(
+        "notices",
+        prms,
+        ["title", "description"]
+    );
+    return graphql(payload, "FETCH_NOTICES")
 }
