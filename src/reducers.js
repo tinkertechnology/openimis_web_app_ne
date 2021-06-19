@@ -21,6 +21,12 @@ function reducer(
         fetchedFeedbacks : false,
         feedbacks : [],
         feedbacksPageInfo : {totalCount:0},
+
+        fetchingvoucherPayments : false,
+        errorvoucherPayments: null,
+        fetchedvoucherPayments: false,
+        voucherPayments: [],
+        voucherPaymentsPageInfo: {totalCount: 0}
     },
  
     action,
@@ -57,6 +63,36 @@ function reducer(
                     errorNotices: formatServerError(action.payload),
                 }
             }
+
+            case "FETCH_PAYMENTS_REQ":
+                return{
+                     ...state,
+                     fetchingvoucherPayments: true,
+                     fetchedvoucherPayments: false,
+                     voucherPayments: [],
+                     voucherPaymentsPageInfo : {totalCount:0},
+                     errorvoucherPayments: null,
+                     
+                }
+             case "FETCH_PAYMENTS_RESP":
+                 return {
+                     ...state,
+                     fetchingvoucherPayments:false,
+                     fetchedvoucherPayments: true,
+                     voucherPayments : parseData(action.payload.data.voucherPayments),
+                     voucherPaymentsPageInfo : pageInfo(action.payload.data.voucherPayments),
+                     errorvoucherPayments: formatGraphQLError(action.payload),
+                     
+     
+                 }
+             case "FETCH_PAYMENTS_ERR":
+                 {
+                     return {
+                         ...state,
+                         errorvoucherPayments: formatServerError(action.payload),
+                     }
+                 }
+
 
             case "FETCH_FEEDBACKS_REQ":
                 return{

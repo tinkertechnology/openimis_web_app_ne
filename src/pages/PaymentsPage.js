@@ -3,7 +3,7 @@ import {withTheme, withStyles} from "@material-ui/core/styles";
 import {connect} from "react-redux";
 import { bindActionCreators } from "redux";
 import {FormattedMessage, ProgressOrError, withModulesManager, withHistory, Table, FakeInput} from "@openimis/fe-core";
-import { fetchNotices } from "../actions";
+import { fetchPayments } from "../actions";
 import { injectIntl } from 'react-intl';
 import {Keyboard, ScreenShare} from "@material-ui/icons";
 import { IconButton, Paper, Grid, Typography } from "@material-ui/core";
@@ -38,7 +38,7 @@ class PaymentsPage extends Component{
             prms.push(`before: "${this.state.beforeCursor}"`)
         }
         prms.push(`orderBy: ["-created_at"]`);
-        this.props.fetchNotices(prms);
+        this.props.fetchPayments(prms);
 
     }
     onChangeRowsPerPage=(count)=>{
@@ -79,7 +79,7 @@ class PaymentsPage extends Component{
 
     render(){
 
-        const { fetchingNotices,classes, errorNotices, notices, PaymentsPageInfo} = this.props;
+        const { fetchingvoucherPayments,classes, errorvoucherPayments, voucherPayments, voucherPaymentsPageInfo} = this.props;
         
         let headers = [
             "my_module.sn",
@@ -93,8 +93,8 @@ class PaymentsPage extends Component{
             value={idx+1}
             
         />,
-            (e) => e.title,
-            e => e.description,
+            (e) => e.id,
+            e => e.voucher,
             e => {
                 return(
                     <div>
@@ -109,22 +109,22 @@ class PaymentsPage extends Component{
           
             
         ]
-        var notice_header = "Published Notices"+PaymentsPageInfo.totalCount;
+        var notice_header = "Published Notices"+voucherPaymentsPageInfo.totalCount;
 
         return (
         <div className={classes.page}>
-                <ProgressOrError progress={fetchingNotices} error={errorNotices} />
+                <ProgressOrError progress={fetchingvoucherPayments} error={errorvoucherPayments} />
             <Paper className={classes.paper}>
               <Table
                   module = "my_module"
                   header = {notice_header}
                   headers = {headers}
                   itemFormatters = {itemFormatters}
-                  items = {notices}
+                  items = {voucherPayments}
                   withPagination={true}
                   page = {this.state.page}
                   pageSize = {this.state.pageSize}
-                  count = {PaymentsPageInfo.totalCount }
+                  count = {voucherPaymentsPageInfo.totalCount }
                   onChangePage={this.onChangePage}
                   onChangeRowsPerPage={this.onChangeRowsPerPage}
               />
@@ -134,15 +134,15 @@ class PaymentsPage extends Component{
     }
 }
 const mapStateToProps = state => ({
-    fetchingNotices : state.my_module.fetchingNotices,
-    errorNotices : state.my_module.errorNotices,
-    fetchedNotices : state.my_module.fetchedNotices,
-    notices : state.my_module.notices,
-    PaymentsPageInfo : state.my_module.noticesPageInfo
+    fetchingvoucherPayments : state.my_module.fetchingvoucherPayments,
+    errorvoucherPayments : state.my_module.errorvoucherPayments,
+    fetchedvoucherPayments : state.my_module.fetchedvoucherPayments,
+    voucherPayments : state.my_module.voucherPayments,
+    voucherPaymentsPageInfo : state.my_module.voucherPaymentsPageInfo
 
 })
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({fetchNotices}, dispatch);
+    return bindActionCreators({fetchPayments}, dispatch);
 }
 
 //export default withTheme(withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(PaymentsPage)))

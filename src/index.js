@@ -4,6 +4,7 @@ import NoticesPage
  from "./pages/NoticesPage";
 const ROUTE_TO_NOTICE = "my_module/notices";
 const ADD_NOTICE = "my_module/add_notices";
+const EDIT_NOTICE = "my_module/edit_notice";
 const PAYMENTS_PAGE = "my_module/payments";
 const FEEDBACK_PAGE = "my_module/feedbacks";
 
@@ -21,6 +22,7 @@ const DEFAULT_CONFIG = {
   "core.Router": [
     { path: ROUTE_TO_NOTICE, component: NoticesPage },
     { path: ADD_NOTICE, component: NoticePage },
+    { path: EDIT_NOTICE +"/:notice_id", component: NoticePage },
     { path: PAYMENTS_PAGE, component: PaymentsPage },
     { path: FEEDBACK_PAGE, component: FeedbackPage },
     

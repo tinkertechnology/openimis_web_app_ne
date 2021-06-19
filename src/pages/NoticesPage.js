@@ -33,7 +33,7 @@ class NoticesPage extends Component{
 
     query = () => {
         let prms = [];
-        prms.push(`title_Icontains: ${this.state.edited.title==null? "": this.state.edited.title}`);
+        // prms.push(`title_Icontains: ${this.state.edited.title==null? "": this.state.edited.title}`);
         prms.push( `first: ${this.state.pageSize}`);
         if(!!this.state.afterCursor){
             prms.push(`after: "${this.state.afterCursor}"`)
@@ -113,8 +113,6 @@ class NoticesPage extends Component{
                 return(
                     <div>
                 <div><Keyboard  /></div>
-                &nbsp;
-                <div><Keyboard /></div>
                 </div>
                 
                 );

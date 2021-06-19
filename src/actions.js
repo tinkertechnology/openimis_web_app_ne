@@ -44,9 +44,9 @@ export function createNotice(notice){
 
 export function fetchPayments(prms){
     const payload = formatPageQueryWithCount(
-        "notices",
+        "voucherPayments",
         prms,
-        ["title", "description"]
+        ["voucher", "id"]
     );
-    return graphql(payload, "FETCH_NOTICES")
+    return graphql(payload, "FETCH_PAYMENTS")
 }
