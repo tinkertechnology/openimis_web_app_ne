@@ -3,7 +3,7 @@ import {withTheme, withStyles} from "@material-ui/core/styles";
 import {Button, Grid} from "@material-ui/core";
 import {TextInput, withModulesManager, withHistory, journalize} from "@openimis/fe-core";
 import { connect } from "react-redux";
-import {createNotice} from "../actions"
+import {createNotice, updateNotice, getNotice} from "../actions"
 import { injectIntl } from 'react-intl';
 import { bindActionCreators } from "redux";
 
@@ -18,7 +18,16 @@ class NoticePage extends Component {
         edited : {}
     }
     save = e => {
-        this.props.createNotice(this.state.edited, `creating ${this.state.edited.title}`)
+        if(!this.props.notice_id){
+            this.props.createNotice(this.state.edited)
+            return
+        }
+        
+        this.props.updateNotice(this.state.edited, this.props.id)
+
+
+
+
         console.log("SAVEED");
     }
     updateAttribute = (k,v) => {
@@ -32,10 +41,26 @@ class NoticePage extends Component {
     // componentDidUpdate(prevProps, prevState,)
     componentDidMount(){
         console.log('notice-page')
+        console.log(this.props.notice_id);
+        this.props.getNotice(this.props.notice_id);
+        if(this.props.notice){
+            this.setState({
+                edited : {
+                     ...this.state.edited ,
+                     title: this.props.notice.title,
+                     description: this.props.notice.description,
+                }
+                //edited : { title : this.props.notice.title, description: this.props.notice.description},
+
+            })
+            
+        }
+        
     }
     render(){
         const {classes} = this.props;
         const {edited} = this.state;
+        const {notice_id, notice} = this.props;
     
         return(
             <div className={classes.page}>
@@ -71,13 +96,15 @@ class NoticePage extends Component {
     }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, props) => ({
     submittingMutation : state.my_module.submittingMutation,
     mutation : state.my_module.mutation,
+    notice_id: props.match.params.notice_id,
+    notice : state.my_module.notice, //get request of the notice detail
 
 }) 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({createNotice}, dispatch);
+    return bindActionCreators({createNotice, updateNotice, getNotice}, dispatch);
 }
 
 

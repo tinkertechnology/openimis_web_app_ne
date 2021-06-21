@@ -19,10 +19,13 @@ const DEFAULT_CONFIG = {
   "translations": [{ key: 'en', messages: messages_en }],
   "reducers": [{ key: 'my_module', reducer }],
   "core.MainMenu" : [MyModuleMainMenu],
+  "refs": [
+    { key: "my_module.route.notice_edit", ref: ADD_NOTICE },
+  ],
   "core.Router": [
     { path: ROUTE_TO_NOTICE, component: NoticesPage },
-    { path: ADD_NOTICE, component: NoticePage },
-    { path: EDIT_NOTICE +"/:notice_id", component: NoticePage },
+    { path: ADD_NOTICE+"/:notice_id?", component: NoticePage },
+    // { path: EDIT_NOTICE +"/:notice_id", component: NoticePage },
     { path: PAYMENTS_PAGE, component: PaymentsPage },
     { path: FEEDBACK_PAGE, component: FeedbackPage },
     

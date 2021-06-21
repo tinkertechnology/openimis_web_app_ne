@@ -8,6 +8,7 @@ function reducer(
         errorNotices: null,
         fetchedNotices : false,
         notices : [],
+        notice: [],
         noticesPageInfo : {totalCount:0},
 
         fetchingPayments :false,
@@ -63,6 +64,32 @@ function reducer(
                     errorNotices: formatServerError(action.payload),
                 }
             }
+            case "GET_NOTICE_REQ":
+                return{
+                     ...state,
+                     fetchingNotices: true,
+                     fetchedNotices: false,
+                     notice: [],
+                     errorNotices: null,
+                     
+                }
+             case "GET_NOTICE_RESP":
+                 return {
+                     ...state,
+                     fetchingNotices:false,
+                     fetchedNotices: true,
+                     notice : action.payload.data.notice,
+                     errorNotices: formatGraphQLError(action.payload),
+                     
+     
+                 }
+             case "GET_NOTICE_ERR":
+                 {
+                     return {
+                         ...state,
+                         errorNotices: formatServerError(action.payload),
+                     }
+                 }
 
             case "FETCH_PAYMENTS_REQ":
                 return{

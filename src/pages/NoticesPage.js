@@ -2,7 +2,7 @@ import React, {Component} from "react"
 import {withTheme, withStyles} from "@material-ui/core/styles";
 import {connect} from "react-redux";
 import { bindActionCreators } from "redux";
-import {FormattedMessage,TextInput, ProgressOrError, withModulesManager, withHistory, Table, FakeInput} from "@openimis/fe-core";
+import {FormattedMessage,TextInput, ProgressOrError, withModulesManager, withHistory, historyPush,  Table, FakeInput} from "@openimis/fe-core";
 import { fetchNotices } from "../actions";
 import { injectIntl } from 'react-intl';
 import {Keyboard, ScreenShare} from "@material-ui/icons";
@@ -15,7 +15,7 @@ const styles = theme => ({
 
 
 class NoticesPage extends Component{
-
+    
     state = {
         page: 0,
         pageSize : 10,
@@ -28,6 +28,7 @@ class NoticesPage extends Component{
 
     componentDidMount(){
         // this.props.fetchNotices();
+        console.log(this.props)
         this.query();
     }
 
@@ -89,10 +90,10 @@ class NoticesPage extends Component{
         )
     }
 
+    provideFeedback = c => historyPush(this.props.modulesManager, this.props.history, "my_module.route.notice_edit", [c.id])
 
     render(){
         const {edited} = this.state;
-
         const { fetchingNotices,classes, errorNotices, notices, noticesPageInfo} = this.props;
         
         let headers = [
@@ -111,9 +112,10 @@ class NoticesPage extends Component{
             e => e.description,
             e => {
                 return(
-                    <div>
-                <div><Keyboard  /></div>
-                </div>
+                    
+                        <div>
+                            <Keyboard  onClick={c => this.provideFeedback(e)} />
+                        </div>
                 
                 );
             
@@ -165,7 +167,8 @@ const mapStateToProps = state => ({
     errorNotices : state.my_module.errorNotices,
     fetchedNotices : state.my_module.fetchedNotices,
     notices : state.my_module.notices,
-    noticesPageInfo : state.my_module.noticesPageInfo
+    noticesPageInfo : state.my_module.noticesPageInfo,
+    
 
 })
 const mapDispatchToProps = dispatch => {

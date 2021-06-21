@@ -115,8 +115,7 @@ class FeedbackPage extends Component{
                 return(
                     <div>
                 <div><Keyboard  /></div>
-                &nbsp;
-                <div><Keyboard /></div>
+                
                 </div>
                 
                 );
