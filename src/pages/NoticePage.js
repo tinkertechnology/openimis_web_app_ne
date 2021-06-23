@@ -43,20 +43,38 @@ class NoticePage extends Component {
         console.log('notice-page')
         console.log(this.props.notice_id);
         this.props.getNotice(this.props.notice_id);
-        if(this.props.notice){
-            this.setState({
-                edited : {
-                     ...this.state.edited ,
-                     title: this.props.notice.title,
-                     description: this.props.notice.description,
-                }
-                //edited : { title : this.props.notice.title, description: this.props.notice.description},
-
-            })
-            
-        }
-        
     }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log('prevProps', prevProps)
+        console.log('props', this.props)
+        console.log('prevState', prevState)
+        if( this.props.notice ){
+            if(!prevProps.notice){
+                console.log(' hello ')
+                this.setState({
+                    edited : {
+                         ...this.state.edited ,
+                         title: this.props.notice.title,
+                         description: this.props.notice.description,
+                    }
+                    //edited : { title : this.props.notice.title, description: this.props.notice.description},
+
+                })
+            }
+        }
+        return
+
+        //ref:
+        // if (prevProps.fetchedClaim !== this.props.fetchedClaim && !!this.props.fetchedClaim) {
+        //     var claim = this.props.claim;
+        //     this.setState(
+        //         { claim, claim_uuid: this.props.claim.uuid, lockNew: false, newClaim: false },
+        //         this.props.claimHealthFacilitySet(this.props.claim.healthFacility)
+        //     );
+        // } 
+    }
+
     render(){
         const {classes} = this.props;
         const {edited} = this.state;
@@ -89,6 +107,7 @@ class NoticePage extends Component {
                     </Grid>
                     <br />
                     <Button onClick={this.save}>SAVE</Button>
+                    <Button onClick={e=>console.log(this)}>SAVE</Button>
                 </Grid>
             </div>
         )

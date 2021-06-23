@@ -69,11 +69,13 @@ function reducer(
                      ...state,
                      fetchingNotices: true,
                      fetchedNotices: false,
-                     notice: [],
+                     notice: null,
                      errorNotices: null,
                      
                 }
-             case "GET_NOTICE_RESP":
+                         case "GET_NOTICE_RESP":
+            console.log('GET_NOTICE_RESP',action.payload.data.notice, action.payload.data )
+             //var notice = parseData(action.payload.data.notice);
                  return {
                      ...state,
                      fetchingNotices:false,
