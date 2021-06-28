@@ -22,8 +22,8 @@ class NoticePage extends Component {
             this.props.createNotice(this.state.edited)
             return
         }
-        
-        this.props.updateNotice(this.state.edited, this.props.id)
+
+        this.props.updateNotice(this.state.edited, this.props.notice_id)
 
 
 
@@ -55,6 +55,7 @@ class NoticePage extends Component {
                 this.setState({
                     edited : {
                          ...this.state.edited ,
+                         id: this.props.notice.id,
                          title: this.props.notice.title,
                          description: this.props.notice.description,
                     }
@@ -72,14 +73,14 @@ class NoticePage extends Component {
         //         { claim, claim_uuid: this.props.claim.uuid, lockNew: false, newClaim: false },
         //         this.props.claimHealthFacilitySet(this.props.claim.healthFacility)
         //     );
-        // } 
+        // }
     }
 
     render(){
         const {classes} = this.props;
         const {edited} = this.state;
         const {notice_id, notice} = this.props;
-    
+
         return(
             <div className={classes.page}>
                 <Grid container>
@@ -121,7 +122,7 @@ const mapStateToProps = (state, props) => ({
     notice_id: props.match.params.notice_id,
     notice : state.my_module.notice, //get request of the notice detail
 
-}) 
+})
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({createNotice, updateNotice, getNotice}, dispatch);
 }

@@ -32,7 +32,7 @@ export function getNotice(notice_id){
    const payload = formatQuery(
        "notice",
        [`id: "${notice_id}"`],
-       ["title", "description"]
+       ["id", "title", "description"]
       
    )
     return graphql(
@@ -59,11 +59,19 @@ export function createNotice(notice){
 }
 
 export function updateNotice(notice, id){
+    console.log('notice', notice);
+    console.log('id', id);
     let noticeGQL = `
+    id: "${notice.id}"
     title: "${notice.title}"
     description: "${notice.description}"
     `
-    let mutation = formatMutation("createNotice", noticeGQL);
+    
+    let jptNoticeGQL = `
+    title: "${notice.title}"
+    description: "${notice.description}"
+    `
+    let mutation = formatMutation("updateNotice", noticeGQL);
     return graphql(
         mutation.payload,
         "UPDATE_NOTICE",
