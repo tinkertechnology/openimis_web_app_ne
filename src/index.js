@@ -3,7 +3,7 @@ import MyModuleMainMenu from "./menu/MyModuleMainMenu";
 import NoticesPage
  from "./pages/NoticesPage";
 const ROUTE_TO_NOTICE = "my_module/notices";
-const ADD_NOTICE = "my_module/add_notices";
+const ADD_NOTICE = "my_module/notice";
 const EDIT_NOTICE = "my_module/edit_notice";
 const PAYMENTS_PAGE = "my_module/payments";
 const FEEDBACK_PAGE = "my_module/feedbacks";

@@ -16,7 +16,7 @@ class MyModuleMainMenu extends Component {
             {
                 text: "Add Notice",
                 icon: <Keyboard />,
-                route: "/my_module/add_notices"
+                route: "/my_module/notice"
             },
             {
                 text: "Renewal Requests",
