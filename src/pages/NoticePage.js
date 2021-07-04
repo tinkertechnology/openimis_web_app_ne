@@ -25,8 +25,8 @@ class NoticePage extends Component {
             this.props.createNotice(this.state.edited)
             return
         }
-        
-        this.props.updateNotice(this.state.edited, this.props.id)
+
+        this.props.updateNotice(this.state.edited, this.props.notice_id)
 
 
 
@@ -38,44 +38,44 @@ class NoticePage extends Component {
         console.log('notice-page')
         console.log(this.props.notice_id);
         this.props.getNotice(this.props.notice_id);
-        if(this.props.notice){
-            console.log('edited value being updated')
-            
-            this.setState({
-                edited : {
-                     ...this.state.edited ,
-                     title: this.props.notice.title,
-                     description: this.props.notice.description,
-                }
-                //edited : { title : this.props.notice.title, description: this.props.notice.description},
+    }
 
-            })
-            console.log('65',this.state, this.props);
-            
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log('prevProps', prevProps)
+        console.log('props', this.props)
+        console.log('prevState', prevState)
+        if( this.props.notice ){
+            if(!prevProps.notice){
+                console.log(' hello ')
+                this.setState({
+                    edited : {
+                         ...this.state.edited ,
+                         id: this.props.notice.id,
+                         title: this.props.notice.title,
+                         description: this.props.notice.description,
+                    }
+                    //edited : { title : this.props.notice.title, description: this.props.notice.description},
+
+                })
+            }
         }
-    }
-    jpt = e => {
-        console.log(this.state.edited)
-        console.log(this.state, this.props)
-    }
-    updateAttribute = (k,v) => {
-        this.setState((state)=> ({
-            edited: {...state.edited, [k]: v}
-        }),
-         e => console.log('STATE' +JSON.stringify(this.state))
-        )
+        return
+
+        //ref:
+        // if (prevProps.fetchedClaim !== this.props.fetchedClaim && !!this.props.fetchedClaim) {
+        //     var claim = this.props.claim;
+        //     this.setState(
+        //         { claim, claim_uuid: this.props.claim.uuid, lockNew: false, newClaim: false },
+        //         this.props.claimHealthFacilitySet(this.props.claim.healthFacility)
+        //     );
+        // }
     }
 
-    // componentDidUpdate(prevProps, prevState,)
-    componentDidMount(){
-        setInterval(this.setStateEdited, 2000);
-        
-    }
     render(){
         const {classes} = this.props;
         const {edited} = this.state;
-        const {notice_id, notice, fetchingNotices, errorNotices} = this.props;
-        console.log('ediredwwad',this.state.edited);
+        const {notice_id, notice} = this.props;
+
         return(
             
             <div className={classes.page}>
@@ -105,7 +105,7 @@ class NoticePage extends Component {
                     </Grid>
                     <br />
                     <Button onClick={this.save}>SAVE</Button>
-                    <Button onClick={this.jpt}>JPT</Button>
+                    <Button onClick={e=>console.log(this)}>SAVE</Button>
                 </Grid>
             </div>
         )
@@ -122,11 +122,8 @@ const mapStateToProps = (state, props) => ({
     //mutation : state.my_module.mutation,
     notice_id: props.match.params.notice_id,
     notice : state.my_module.notice, //get request of the notice detail
-    fetchingNotices : state.my_module.fetchingNotices,
-    errorNotices : state.my_module.errorNotices,
-    s: abc(state, "state"),
-    p : abc(props, "props")
-}) 
+
+})
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({createNotice, updateNotice, getNotice}, dispatch);
 }

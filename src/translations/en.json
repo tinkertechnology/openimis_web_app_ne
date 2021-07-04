@@ -2,5 +2,22 @@
     "my_module.mainMenu" : "My Module transaltion",
     "my_module.notices" : "Notices",
     "my_module.NoticePage.Header" : "ALL NOTICES",
-    "my_module.notices_table.count" : "Published Notices ({count})"
+    "my_module.notices_table.count" : "Published Notices ({count})",
+    "my_module.sn" : "SN",
+    "my_module.chfid" : "Search CHFID",
+    "my_module.Insuree" : "Inusree Name",
+    "my_module.action" : "Action",
+
+
+    "my_module.notice.title" : "Notice Title",
+    "my_module.notice.description" : "Description",
+
+
+    "my_module.feedback.name" : "Name of Feedback Person",
+    "my_module.feedback.email" : "Email",
+    "my_module.feedback.feedback_text" : "Feedback Text",
+    "my_module.feedback.mobile_number" : "Mobile"
+
+
+
 }

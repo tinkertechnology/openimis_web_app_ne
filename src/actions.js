@@ -59,7 +59,15 @@ export function createNotice(notice){
 }
 
 export function updateNotice(notice, id){
+    console.log('notice', notice);
+    console.log('id', id);
     let noticeGQL = `
+    id: "${notice.id}"
+    title: "${notice.title}"
+    description: "${notice.description}"
+    `
+    
+    let jptNoticeGQL = `
     title: "${notice.title}"
     description: "${notice.description}"
     `
@@ -76,10 +84,12 @@ export function updateNotice(notice, id){
 
 
 export function fetchPayments(prms){
+    var projections = ["otherNames"]
     const payload = formatPageQueryWithCount(
         "voucherPayments",
         prms,
-        ["voucher", "id"]
+        ["voucher", "id", `insuree{otherNames, lastName, chfId}`],
+        
     );
     return graphql(payload, "FETCH_PAYMENTS")
 }

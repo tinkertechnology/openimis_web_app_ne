@@ -1,0 +1,23 @@
+{
+    "my_module.mainMenu" : "My Module transaltion",
+    "my_module.notices" : "सूचनाहरु",
+    "my_module.NoticePage.Header" : "सबै सूचनाहरु",
+    "my_module.notices_table.count" : "पब्लिस भएका सूचनाहरु ({count})",
+    "my_module.sn" : "क्र.स",
+    "my_module.chfid" : " CHFID खोजी",
+    "my_module.Insuree" : "बिमा गर्नेको नाम",
+    "my_module.action" : "एक्सन",
+
+
+    "my_module.notice.title" : "सूचनाको नाम",
+    "my_module.notice.description" : "सूचना विवरण",
+
+
+    "my_module.feedback.name" : "फिडब्याक दिनेको नाम",
+    "my_module.feedback.email" : "ईमेल",
+    "my_module.feedback.feedback_text" : "प्रतिकृया ",
+    "my_module.feedback.mobile_number" : "मोबाईल"
+
+
+
+}

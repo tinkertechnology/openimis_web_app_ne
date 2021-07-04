@@ -26,7 +26,10 @@ function reducer(
         fetchingvoucherPayments : false,
         errorvoucherPayments: null,
         fetchedvoucherPayments: false,
-        voucherPayments: [],
+        voucherPayments: {
+        },
+            
+        
         voucherPaymentsPageInfo: {totalCount: 0}
     },
  
@@ -69,11 +72,13 @@ function reducer(
                      ...state,
                      fetchingNotices: true,
                      fetchedNotices: false,
-                     notice: [],
+                     notice: null,
                      errorNotices: null,
                      
                 }
-             case "GET_NOTICE_RESP":
+                         case "GET_NOTICE_RESP":
+            console.log('GET_NOTICE_RESP',action.payload.data.notice, action.payload.data )
+             //var notice = parseData(action.payload.data.notice);
                  return {
                      ...state,
                      fetchingNotices:false,
@@ -96,7 +101,9 @@ function reducer(
                      ...state,
                      fetchingvoucherPayments: true,
                      fetchedvoucherPayments: false,
-                     voucherPayments: [],
+                     voucherPayments: {
+                         
+                     },
                      voucherPaymentsPageInfo : {totalCount:0},
                      errorvoucherPayments: null,
                      

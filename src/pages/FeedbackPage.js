@@ -97,9 +97,11 @@ class FeedbackPage extends Component{
         
         let headers = [
             "my_module.sn",
-            "my_module.code",
-            "my_module.name",
-            "my_module.action"
+            "my_module.feedback.name",
+            "my_module.feedback.email",
+            "my_module.feedback.mobile_number",
+            "my_module.feedback.feedback_text",
+            // "my_module.action"
         ]
         let itemFormatters = [
         (e, idx) => <FakeInput
@@ -111,16 +113,7 @@ class FeedbackPage extends Component{
             e => e.emailAddress,
             e=>e.mobileNumbeer,
             e=>e. queries,
-            e => {
-                return(
-                    <div>
-                <div><Keyboard  /></div>
-                
-                </div>
-                
-                );
-            
-            },
+
           
             
         ]

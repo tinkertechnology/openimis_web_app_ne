@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux";
 import {FormattedMessage,TextInput, ProgressOrError, withModulesManager, withHistory, historyPush,  Table, FakeInput} from "@openimis/fe-core";
 import { fetchNotices } from "../actions";
 import { injectIntl } from 'react-intl';
-import {Keyboard, ScreenShare} from "@material-ui/icons";
+import {Keyboard, ScreenShare,Loyalty } from "@material-ui/icons";
 import { IconButton, Paper, Grid, Typography } from "@material-ui/core";
 
 
@@ -34,7 +34,7 @@ class NoticesPage extends Component{
 
     query = () => {
         let prms = [];
-        // prms.push(`title_Icontains: ${this.state.edited.title==null? "": this.state.edited.title}`);
+        prms.push(`title_Icontains: ${this.state.edited.title==null ? `""`: `"${this.state.edited.title}"`}`);
         prms.push( `first: ${this.state.pageSize}`);
         if(!!this.state.afterCursor){
             prms.push(`after: "${this.state.afterCursor}"`)
@@ -90,7 +90,7 @@ class NoticesPage extends Component{
         )
     }
 
-    provideFeedback = c => historyPush(this.props.modulesManager, this.props.history, "my_module.route.notice_edit", [c.id])
+    editNotice = c => historyPush(this.props.modulesManager, this.props.history, "my_module.route.notice_edit", [c.id])
 
     render(){
         const {edited} = this.state;
@@ -98,8 +98,8 @@ class NoticesPage extends Component{
         
         let headers = [
             "my_module.sn",
-            "my_module.code",
-            "my_module.name",
+            "my_module.notice.title",
+            "my_module.notice.description",
             "my_module.action"
         ]
         let itemFormatters = [
@@ -114,7 +114,7 @@ class NoticesPage extends Component{
                 return(
                     
                         <div>
-                            <Keyboard  onClick={c => this.provideFeedback(e)} />
+                            <Loyalty  onClick={c => this.editNotice(e)} />
                         </div>
                 
                 );

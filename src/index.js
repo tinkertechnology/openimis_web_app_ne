@@ -1,4 +1,5 @@
 import messages_en from "./translations/en.json";
+import messages_np from "./translations/np.json";
 import MyModuleMainMenu from "./menu/MyModuleMainMenu";
 import NoticesPage
  from "./pages/NoticesPage";
