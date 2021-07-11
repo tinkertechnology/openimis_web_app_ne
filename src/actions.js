@@ -93,3 +93,15 @@ export function fetchPayments(prms){
     );
     return graphql(payload, "FETCH_PAYMENTS")
 }
+
+
+
+
+export function fetchTemporaryRegistration(prms){
+    const payload = formatPageQueryWithCount(
+        "tempregs",
+        prms,
+        ["json", "id","createdAt", "updatedAt"]
+    );
+    return graphql(payload, "FETCH_TEMPREGS")
+}

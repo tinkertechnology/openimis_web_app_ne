@@ -118,7 +118,7 @@ function abc(x, m){
     return x;
 }
 const mapStateToProps = (state, props) => ({
-   // submittingMutation : state.my_module.submittingMutation,
+   submittingMutation : state.my_module.submittingMutation,
     //mutation : state.my_module.mutation,
     notice_id: props.match.params.notice_id,
     notice : state.my_module.notice, //get request of the notice detail

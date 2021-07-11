@@ -28,9 +28,16 @@ function reducer(
         fetchedvoucherPayments: false,
         voucherPayments: {
         },
+        voucherPaymentsPageInfo: {totalCount: 0},
+
+        fetchingTempRegs: false,
+        errorTempRegs : null,
+        tempRegs : [],
+        fetchedTempRegs: false,
+        tempRegsPageInfo : {totalCount: 0},
             
         
-        voucherPaymentsPageInfo: {totalCount: 0}
+        
     },
  
     action,
@@ -76,7 +83,7 @@ function reducer(
                      errorNotices: null,
                      
                 }
-                         case "GET_NOTICE_RESP":
+            case "GET_NOTICE_RESP":
             console.log('GET_NOTICE_RESP',action.payload.data.notice, action.payload.data )
              //var notice = parseData(action.payload.data.notice);
                  return {
@@ -156,6 +163,66 @@ function reducer(
                          errorNotices: formatServerError(action.payload),
                      }
                  }
+                 //feedback block
+        
+            case "FETCH_FEEDBACKS_REQ":
+                return{
+                     ...state,
+                     fetchingFeedbacks: true,
+                     fetchedFeedbacks: false,
+                     feedbacks: [],
+                     feedbacksPageInfo : {totalCount:0},
+                     errorNotices: null,
+                     
+                }
+             case "FETCH_FEEDBACKS_RESP":
+                 return {
+                     ...state,
+                     fetchingFeedbacks:false,
+                     fetchedFeedbacks: true,
+                     feedbacks : parseData(action.payload.data.feedbacks),
+                     feedbacksPageInfo : pageInfo(action.payload.data.feedbacks),
+                     errorFeedbacks: formatGraphQLError(action.payload),
+                     
+     
+                 }
+             case "FETCH_FEEDBACKS_ERR":
+                 {
+                     return {
+                         ...state,
+                         errorNotices: formatServerError(action.payload),
+                     }
+                 }
+
+                 //tempregtable block
+                 case "FETCH_TEMPREGS_REQ":
+                    return{
+                         ...state,
+                         fetchingTempRegs: true,
+                         fetechedTemRegs: false,
+                         tempRegs: [],
+                         tempRegsPageInfo : {totalCount:0},
+                         errorTempRegs: null,
+                         
+                    }
+                 case "FETCH_TEMPREGS_RESP":
+                     return {
+                         ...state,
+                         fetchingTempRegs:false,
+                         fetchedTempRegs: true,
+                         tempRegs : parseData(action.payload.data.tempregs),
+                         tempRegsPageInfo : pageInfo(action.payload.data.tempregs),
+                         errorTempRegs: formatGraphQLError(action.payload),
+                         
+         
+                     }
+                 case "FETCH_TEMPREGS_ERR":
+                     {
+                         return {
+                             ...state,
+                             errorNotices: formatServerError(action.payload),
+                         }
+                     }
         
         default:
             return state;

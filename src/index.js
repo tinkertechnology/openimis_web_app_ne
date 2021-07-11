@@ -8,11 +8,13 @@ const ADD_NOTICE = "my_module/notice";
 const EDIT_NOTICE = "my_module/edit_notice";
 const PAYMENTS_PAGE = "my_module/payments";
 const FEEDBACK_PAGE = "my_module/feedbacks";
+const REGISTRATIONS_PAGE = "my_module/registrations";
 
 import reducer from "./reducers";
 import NoticePage from "./pages/NoticePage";
 import PaymentsPage from "./pages/PaymentsPage";
 import FeedbackPage from "./pages/FeedbackPage";
+import RegistrationPage from "./pages/RegistrationPage";
 
 
 
@@ -29,6 +31,7 @@ const DEFAULT_CONFIG = {
     // { path: EDIT_NOTICE +"/:notice_id", component: NoticePage },
     { path: PAYMENTS_PAGE, component: PaymentsPage },
     { path: FEEDBACK_PAGE, component: FeedbackPage },
+    { path: REGISTRATIONS_PAGE, component: RegistrationPage },
     
   ],
 }

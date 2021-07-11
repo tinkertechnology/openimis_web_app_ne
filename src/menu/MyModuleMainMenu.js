@@ -27,7 +27,13 @@ class MyModuleMainMenu extends Component {
                 text: "Feedbacks",
                 icon: <Keyboard />,
                 route: "/my_module/feedbacks"
-            }             
+            },
+            {
+                text: "Registrations",
+                icon: <Keyboard />,
+                route: "/my_module/registrations"
+            },
+                         
         );
         if(!entries.length) return null;
         return(
