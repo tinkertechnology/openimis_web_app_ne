@@ -80,9 +80,11 @@ class AttachmentsDialogPreview extends Component {
 
             
             <center>
-               <iframe src={this.getUrl(iframesrc)} style={{height:"80vh", width:"80vw", transform: `scale(${this.state.scale})`}}/> 
+            <iframe src={this.getUrl(iframesrc)} style={{height:"90vh", width:"90vw"}}/> 
+            </center>
+               
                {/* <iframe src="{this.getUrl(iframesrc)} style={{height:"80vh", width:"80vw", transform: `scale(${this.state.scale})`}}" /> */}
-               </center>
+             
                <Divider />
                
                <center>
@@ -233,7 +235,7 @@ class RegistrationPage extends Component{
         }
     }
 
-    previewVoucher = c => { console.log(c); this.setState({iframesrc: "http://192.168.31.250:8000/api/webapp/temp_insuree_reg/"}); }
+    previewVoucher = c => { console.log('c',c); this.setState({iframesrc: `http://192.168.31.250:8000/api/webapp/temp_insuree_reg/?id=${c.id}`}); }
     previewVoucherCloseFn = c=> { console.log(c); this.setState({iframesrc: null}); }
 
 
