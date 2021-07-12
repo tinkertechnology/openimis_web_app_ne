@@ -203,7 +203,8 @@ class RegistrationPage extends Component{
         if(!!this.state.beforeCursor){
             prms.push(`before: "${this.state.beforeCursor}"`)
         }
-        prms.push(`orderBy: ["-created_at"]`);
+
+        prms.push(`orderBy: ["-created_at"], isApproved: false`);
         this.props.fetchTemporaryRegistration(prms);
 
     }
@@ -268,14 +269,21 @@ class RegistrationPage extends Component{
         this.query(); 
     }
 
-
+    getStatus = (c) => {
+        if(c.isApproved==true){
+            return "Approved";
+        }
+        return "Pending"
+        
+    }
     render(){
 
         const { fetchingTempRegs,classes, errorTempRegs, tempRegs, tempRegsPageInfo} = this.props;
         let headers = [
             "my_module.sn",
-            "my_module.json",
-            "my_module.action"
+            "my_module.registration.temp_id",
+            "my_module.registration.status",
+            "my_module.registration.action"
         ]
         let itemFormatters = [
         (e, idx) => <FakeInput
@@ -284,7 +292,7 @@ class RegistrationPage extends Component{
             
         />,
             (e) => e.id,
-            // e => e.json,
+            e => this.getStatus(e),
              e => {
                 return(
                     

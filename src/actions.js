@@ -101,7 +101,7 @@ export function fetchTemporaryRegistration(prms){
     const payload = formatPageQueryWithCount(
         "tempregs",
         prms,
-        ["json", "id","createdAt", "updatedAt"]
+        ["json", "id","createdAt", "updatedAt", "isApproved"]
     );
     return graphql(payload, "FETCH_TEMPREGS")
 }

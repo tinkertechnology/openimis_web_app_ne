@@ -16,7 +16,11 @@
     "my_module.feedback.name" : "Name of Feedback Person",
     "my_module.feedback.email" : "Email",
     "my_module.feedback.feedback_text" : "Feedback Text",
-    "my_module.feedback.mobile_number" : "Mobile"
+    "my_module.feedback.mobile_number" : "Mobile",
+
+    "my_module.registration.temp_id" : "TempID",
+    "my_module.registration.status" : "Status",
+    "my_module.registration.action" : "Action"
 
 
 
