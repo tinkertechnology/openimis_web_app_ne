@@ -2,7 +2,7 @@ import React, {Component, Fragment} from "react"
 import {withTheme, withStyles} from "@material-ui/core/styles";
 import {connect} from "react-redux";
 import { bindActionCreators } from "redux";
-import {FormattedMessage,TextInput,PublishedComponent, ProgressOrError, withModulesManager, withHistory, Table, FakeInput} from "@openimis/fe-core";
+import {FormattedMessage,TextInput,PublishedComponent, ProgressOrError, withModulesManager, withHistory, Table, FakeInput, decodeId} from "@openimis/fe-core";
 import { fetchTemporaryRegistration } from "../actions";
 import { injectIntl } from 'react-intl';
 import {Keyboard, ScreenShare} from "@material-ui/icons";
@@ -24,6 +24,24 @@ const styles = theme => ({
     page: theme.page,
 });
 
+//http://localhost:3000/my_module/registrations?previewDomain=http://localhost:8055
+
+function getUrlParameterRegistrationPage(sParam) {
+  console.log('getUrlParameter');
+
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+}
 class AttachmentsDialogPreview extends Component {
     attachments = [];
     state = {
@@ -50,6 +68,10 @@ class AttachmentsDialogPreview extends Component {
         this.setState({scale: i})
     }
     getUrl(attachment){
+        var previewDomain=getUrlParameterRegistrationPage('previewDomain');
+        if (previewDomain){ return previewDomain+attachment; }
+        return attachment;
+
         console.log(attachment);
         return attachment
         return 'https://picsum.photos/seed/1/1000/1000';
@@ -235,7 +257,11 @@ class RegistrationPage extends Component{
         }
     }
 
-    previewVoucher = c => { console.log('c',c); this.setState({iframesrc: `http://192.168.31.250:8000/api/webapp/temp_insuree_reg/?id=${c.id}`}); }
+    previewVoucher = c => { 
+        console.log(c); 
+        var iDecodeId = decodeId(c.id);
+        this.setState({iframesrc: `/api/webapp/temp_insuree_reg/?id=${c.id}&decodeId=${iDecodeId}`}); 
+    }
     previewVoucherCloseFn = c=> { console.log(c); this.setState({iframesrc: null}); }
 
 
