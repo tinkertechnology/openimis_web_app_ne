@@ -260,7 +260,11 @@ class RegistrationPage extends Component{
         var iDecodeId = decodeId(c.id);
         this.setState({iframesrc: `/api/webapp/temp_insuree_reg/?id=${c.id}&decodeId=${iDecodeId}`}); 
     }
-    previewVoucherCloseFn = c=> { console.log(c); this.setState({iframesrc: null}); }
+    previewVoucherCloseFn = c=> { 
+        console.log(c); 
+        this.setState({iframesrc: null}); 
+        this.query(); 
+    }
 
 
     render(){
