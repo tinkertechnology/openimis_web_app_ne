@@ -1,26 +1,30 @@
 {
-    "my_module.mainMenu" : "My Module transaltion",
-    "my_module.notices" : "Notices",
-    "my_module.NoticePage.Header" : "ALL NOTICES",
-    "my_module.notices_table.count" : "Published Notices ({count})",
-    "my_module.sn" : "SN",
-    "my_module.chfid" : "Search CHFID",
-    "my_module.Insuree" : "Inusree Name",
-    "my_module.action" : "Action",
+    "webapp.mainMenu" : "My Module transaltion",
+    "webapp.notices" : "Notices",
+    "webapp.NoticePage.Header" : "ALL NOTICES",
+    "webapp.notices_table.count" : "Published Notices ({count})",
+    "webapp.sn" : "SN",
+    "webapp.chfid" : "Search CHFID",
+    "webapp.Insuree" : "Inusree Name",
+    "webapp.action" : "Action",
 
 
-    "my_module.notice.title" : "Notice Title",
-    "my_module.notice.description" : "Description",
+    "webapp.notice.title" : "Notice Title",
+    "webapp.notice.description" : "Description",
 
 
-    "my_module.feedback.name" : "Name of Feedback Person",
-    "my_module.feedback.email" : "Email",
-    "my_module.feedback.feedback_text" : "Feedback Text",
-    "my_module.feedback.mobile_number" : "Mobile",
+    "webapp.feedback.name" : "Name of Feedback Person",
+    "webapp.feedback.email" : "Email",
+    "webapp.feedback.feedback_text" : "Feedback Text",
+    "webapp.feedback.mobile_number" : "Mobile",
 
-    "my_module.registration.temp_id" : "TempID",
-    "my_module.registration.status" : "Status",
-    "my_module.registration.action" : "Action"
+    "webapp.registration.temp_id" : "TempID",
+    "webapp.registration.status" : "Status",
+    "webapp.registration.action" : "Action",
+
+    "webapp.registration.phone" : "Register's Phone",
+    "webapp.registration.name" : "Register's Name"
+
 
 
 

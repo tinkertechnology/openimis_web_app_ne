@@ -96,12 +96,12 @@ class FeedbackPage extends Component{
         const { fetchingFeedbacks,classes, errorFeedbacks, feedbacks, feedbacksPageInfo} = this.props;
         
         let headers = [
-            "my_module.sn",
-            "my_module.feedback.name",
-            "my_module.feedback.email",
-            "my_module.feedback.mobile_number",
-            "my_module.feedback.feedback_text",
-            // "my_module.action"
+            "webapp.sn",
+            "webapp.feedback.name",
+            "webapp.feedback.email",
+            "webapp.feedback.mobile_number",
+            "webapp.feedback.feedback_text",
+            // "webapp.action"
         ]
         let itemFormatters = [
         (e, idx) => <FakeInput
@@ -126,7 +126,7 @@ class FeedbackPage extends Component{
             <Grid container>
                     <Grid item>
                         <TextInput
-                            module="my_module" label = "noticeForm.title"
+                            module="webapp" label = "noticeForm.title"
                             value={edited.title}
                             required = {true}
                             inputProps={{
@@ -139,7 +139,7 @@ class FeedbackPage extends Component{
             
             
               <Table
-                  module = "my_module"
+                  module = "webapp"
                   header = {notice_header}
                   headers = {headers}
                   itemFormatters = {itemFormatters}
@@ -157,11 +157,11 @@ class FeedbackPage extends Component{
     }
 }
 const mapStateToProps = state => ({
-    fetchingFeedbacks : state.my_module.fetchingFeedbacks,
-    errorFeedbacks : state.my_module.errorFeedbacks,
-    fetchedFeedbacks : state.my_module.fetchedFeedbacks,
-    feedbacks : state.my_module.feedbacks,
-    feedbacksPageInfo : state.my_module.feedbacksPageInfo
+    fetchingFeedbacks : state.webapp.fetchingFeedbacks,
+    errorFeedbacks : state.webapp.errorFeedbacks,
+    fetchedFeedbacks : state.webapp.fetchedFeedbacks,
+    feedbacks : state.webapp.feedbacks,
+    feedbacksPageInfo : state.webapp.feedbacksPageInfo
 
 })
 const mapDispatchToProps = dispatch => {

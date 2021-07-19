@@ -6,8 +6,19 @@ import { connect } from "react-redux";
 import {createNotice, updateNotice, getNotice} from "../actions"
 import { injectIntl } from 'react-intl';
 import { bindActionCreators } from "redux";
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
 
 
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      '& .MuiTextField-root': {
+        margin: theme.spacing(1),
+        width: '25ch',
+      },
+    },
+  }));
 
 const styles = theme => ({
     page: theme.page
@@ -40,7 +51,15 @@ class NoticePage extends Component {
         this.props.getNotice(this.props.notice_id);
     }
 
+    componentDidMount(){
+        if(this.props.notice_id){
+            this.props.getNotice(this.props.notice_id);
+        }
+    }
     componentDidUpdate(prevProps, prevState, snapshot) {
+        if(prevProps.submittingMutation && !this.props.submittingMutation){
+            this.props.journalize(this.props.mutation);
+        }
         console.log('prevProps', prevProps)
         console.log('props', this.props)
         console.log('prevState', prevState)
@@ -60,30 +79,32 @@ class NoticePage extends Component {
             }
         }
         return
-
-        //ref:
-        // if (prevProps.fetchedClaim !== this.props.fetchedClaim && !!this.props.fetchedClaim) {
-        //     var claim = this.props.claim;
-        //     this.setState(
-        //         { claim, claim_uuid: this.props.claim.uuid, lockNew: false, newClaim: false },
-        //         this.props.claimHealthFacilitySet(this.props.claim.healthFacility)
-        //     );
-        // }
+    }
+    
+    updateAttribute = (k,v) => {
+        this.setState((state)=> ({
+            edited: {...state.edited, [k]: v}
+        }),
+         e => console.log('STATE' +JSON.stringify(this.state))
+        )
     }
 
+    
     render(){
+        
         const {classes} = this.props;
         const {edited} = this.state;
-        const {notice_id, notice} = this.props;
-
+        const {submittingMutation} = this.props;
         return(
             
-            <div className={classes.page}>
-                 <ProgressOrError progress={fetchingNotices} error={errorNotices} />
-                <Grid container>
-                    <Grid item>
+            <div className={classes.root}>
+                 <ProgressOrError progress={submittingMutation}  />
+
+               <Grid container spacing={12}>
+                    <Grid item  xs={4}>
+                    <Paper className={classes.paper}>
                         <TextInput
-                            module="my_module" label = "noticeForm.title"
+                            module="webapp" label = "noticeForm.title"
                             value={edited.title}
                             required = {true}
                             inputProps={{
@@ -91,10 +112,11 @@ class NoticePage extends Component {
                             }}
                             onChange={v=>this.updateAttribute("title", v)}
                         />
+                        </Paper>
                     </Grid>
-                    <Grid item>
+                    <Grid item  xs={4}>
                         <TextInput
-                            module="my_module" label = "noticeForm.description"
+                            module="webapp" label = "noticeForm.description"
                             value={edited.description}
                             required = {true}
                             inputProps={{
@@ -105,7 +127,7 @@ class NoticePage extends Component {
                     </Grid>
                     <br />
                     <Button onClick={this.save}>SAVE</Button>
-                    <Button onClick={e=>console.log(this)}>SAVE</Button>
+                    {/* <Button onClick={e=>console.log(this)}>SAVE</Button> */}
                 </Grid>
             </div>
         )
@@ -118,14 +140,14 @@ function abc(x, m){
     return x;
 }
 const mapStateToProps = (state, props) => ({
-   submittingMutation : state.my_module.submittingMutation,
-    //mutation : state.my_module.mutation,
+   submittingMutation : state.webapp.submittingMutation,
+    mutation : state.webapp.mutation,
     notice_id: props.match.params.notice_id,
-    notice : state.my_module.notice, //get request of the notice detail
+    notice : state.webapp.notice, //get request of the notice detail
 
 })
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({createNotice, updateNotice, getNotice}, dispatch);
+    return bindActionCreators({createNotice, updateNotice, getNotice, journalize}, dispatch);
 }
 
 

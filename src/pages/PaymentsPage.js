@@ -235,12 +235,12 @@ class PaymentsPage extends Component{
 
         const { fetchingvoucherPayments,classes, errorvoucherPayments, voucherPayments, voucherPaymentsPageInfo} = this.props;
         let headers = [
-            "my_module.sn",
-            "my_module.code",
-            "my_module.name",
-            "my_module.Insuree",
-            "my_module.chfid",
-            "my_module.action"
+            "webapp.sn",
+            "webapp.code",
+            "webapp.name",
+            "webapp.Insuree",
+            "webapp.chfid",
+            "webapp.action"
         ]
         let itemFormatters = [
         (e, idx) => <FakeInput
@@ -275,7 +275,7 @@ class PaymentsPage extends Component{
             <Grid container>
                     <Grid item>
                         <TextInput
-                            module="my_module" label = "noticeForm.chfid"
+                            module="webapp" label = "noticeForm.chfid"
                             value={this.state.edited.chfid}
                             required = {true}
                             inputProps={{
@@ -287,7 +287,7 @@ class PaymentsPage extends Component{
 
                     <Grid item>
                         <TextInput
-                            module="my_module" label = "noticeForm.name"
+                            module="webapp" label = "noticeForm.name"
                             value={this.state.edited.insuree_name}
                             required = {false}
                             inputProps={{
@@ -300,7 +300,7 @@ class PaymentsPage extends Component{
 
 
               <Table
-                  module = "my_module"
+                  module = "webapp"
                   header = {notice_header}
                   headers = {headers}
                   itemFormatters = {itemFormatters}
@@ -318,11 +318,11 @@ class PaymentsPage extends Component{
     }
 }
 const mapStateToProps = state => ({
-    fetchingvoucherPayments : state.my_module.fetchingvoucherPayments,
-    errorvoucherPayments : state.my_module.errorvoucherPayments,
-    fetchedvoucherPayments : state.my_module.fetchedvoucherPayments,
-    voucherPayments : state.my_module.voucherPayments,
-    voucherPaymentsPageInfo : state.my_module.voucherPaymentsPageInfo
+    fetchingvoucherPayments : state.webapp.fetchingvoucherPayments,
+    errorvoucherPayments : state.webapp.errorvoucherPayments,
+    fetchedvoucherPayments : state.webapp.fetchedvoucherPayments,
+    voucherPayments : state.webapp.voucherPayments,
+    voucherPaymentsPageInfo : state.webapp.voucherPaymentsPageInfo
 
 })
 const mapDispatchToProps = dispatch => {

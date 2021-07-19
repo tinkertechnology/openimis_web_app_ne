@@ -1,14 +1,14 @@
 import messages_en from "./translations/en.json";
 import messages_np from "./translations/np.json";
-import MyModuleMainMenu from "./menu/MyModuleMainMenu";
+import WebappMainMenu from "./menu/WebappMainMenu";
 import NoticesPage
  from "./pages/NoticesPage";
-const ROUTE_TO_NOTICE = "my_module/notices";
-const ADD_NOTICE = "my_module/notice";
-const EDIT_NOTICE = "my_module/edit_notice";
-const PAYMENTS_PAGE = "my_module/payments";
-const FEEDBACK_PAGE = "my_module/feedbacks";
-const REGISTRATIONS_PAGE = "my_module/registrations";
+const ROUTE_TO_NOTICE = "webapp/notices";
+const ADD_NOTICE = "webapp/notice";
+const EDIT_NOTICE = "webapp/edit_notice";
+const PAYMENTS_PAGE = "webapp/payments";
+const FEEDBACK_PAGE = "webapp/feedbacks";
+const REGISTRATIONS_PAGE = "webapp/registrations";
 
 import reducer from "./reducers";
 import NoticePage from "./pages/NoticePage";
@@ -20,10 +20,10 @@ import RegistrationPage from "./pages/RegistrationPage";
 
 const DEFAULT_CONFIG = {
   "translations": [{ key: 'en', messages: messages_en }],
-  "reducers": [{ key: 'my_module', reducer }],
-  "core.MainMenu" : [MyModuleMainMenu],
+  "reducers": [{ key: 'webapp', reducer }],
+  "core.MainMenu" : [WebappMainMenu],
   "refs": [
-    { key: "my_module.route.notice_edit", ref: ADD_NOTICE },
+    { key: "webapp.route.notice_edit", ref: ADD_NOTICE },
   ],
   "core.Router": [
     { path: ROUTE_TO_NOTICE, component: NoticesPage },
@@ -35,6 +35,6 @@ const DEFAULT_CONFIG = {
     
   ],
 }
-export const MyModuleModule = (cfg) => {
+export const FeWebapp = (cfg) => {
   return { ...DEFAULT_CONFIG, ...cfg };
 }

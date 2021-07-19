@@ -90,17 +90,17 @@ class NoticesPage extends Component{
         )
     }
 
-    editNotice = c => historyPush(this.props.modulesManager, this.props.history, "my_module.route.notice_edit", [c.id])
+    editNotice = c => historyPush(this.props.modulesManager, this.props.history, "webapp.route.notice_edit", [c.id])
 
     render(){
         const {edited} = this.state;
         const { fetchingNotices,classes, errorNotices, notices, noticesPageInfo} = this.props;
         
         let headers = [
-            "my_module.sn",
-            "my_module.notice.title",
-            "my_module.notice.description",
-            "my_module.action"
+            "webapp.sn",
+            "webapp.notice.title",
+            "webapp.notice.description",
+            "webapp.action"
         ]
         let itemFormatters = [
         (e, idx) => <FakeInput
@@ -132,7 +132,7 @@ class NoticesPage extends Component{
             <Grid container>
                     <Grid item>
                         <TextInput
-                            module="my_module" label = "noticeForm.title"
+                            module="webapp" label = "noticeForm.title"
                             value={edited.title}
                             required = {true}
                             inputProps={{
@@ -145,7 +145,7 @@ class NoticesPage extends Component{
             
             
               <Table
-                  module = "my_module"
+                  module = "webapp"
                   header = {notice_header}
                   headers = {headers}
                   itemFormatters = {itemFormatters}
@@ -163,11 +163,11 @@ class NoticesPage extends Component{
     }
 }
 const mapStateToProps = state => ({
-    fetchingNotices : state.my_module.fetchingNotices,
-    errorNotices : state.my_module.errorNotices,
-    fetchedNotices : state.my_module.fetchedNotices,
-    notices : state.my_module.notices,
-    noticesPageInfo : state.my_module.noticesPageInfo,
+    fetchingNotices : state.webapp.fetchingNotices,
+    errorNotices : state.webapp.errorNotices,
+    fetchedNotices : state.webapp.fetchedNotices,
+    notices : state.webapp.notices,
+    noticesPageInfo : state.webapp.noticesPageInfo,
     
 
 })

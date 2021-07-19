@@ -3,7 +3,7 @@
 
 # dependencies
 node_modules
-
+*.zip
 # builds
 build
 dist

@@ -10,6 +10,8 @@ function reducer(
         notices : [],
         notice: [],
         noticesPageInfo : {totalCount:0},
+        submittingMutation : false,
+        mutation: {},
 
         fetchingPayments :false,
         errorPayments: null,
@@ -35,8 +37,10 @@ function reducer(
         tempRegs : [],
         fetchedTempRegs: false,
         tempRegsPageInfo : {totalCount: 0},
-            
+
+        //mutation adding notices
         
+            
         
     },
  
@@ -51,7 +55,6 @@ function reducer(
                 fetchedNotices: false,
                 notices: [],
                 noticesPageInfo : {totalCount:0},
-                submittingMutation: false,
                 mutation: {},
                 errorNotices: null,
                 
@@ -222,7 +225,16 @@ function reducer(
                              ...state,
                              errorNotices: formatServerError(action.payload),
                          }
-                     }
+                     };
+
+                case "CREATE_NOTICE_REQ":
+                    return dispatchMutationReq(state,action);
+                case "CREATE_NOTICE_ERR":
+                    return dispatchMutationErr(state,action);
+                case "CREATE_NOTICE_RESP":
+                    return dispatchMutationResp(state, "", action);
+
+                     
         
         default:
             return state;

@@ -24,7 +24,7 @@ const styles = theme => ({
     page: theme.page,
 });
 
-//http://localhost:3000/my_module/registrations?previewDomain=http://localhost:8055
+//http://localhost:3000/webapp/registrations?previewDomain=http://localhost:8055
 
 function getUrlParameterRegistrationPage(sParam) {
   console.log('getUrlParameter');
@@ -280,10 +280,12 @@ class RegistrationPage extends Component{
 
         const { fetchingTempRegs,classes, errorTempRegs, tempRegs, tempRegsPageInfo} = this.props;
         let headers = [
-            "my_module.sn",
-            "my_module.registration.temp_id",
-            "my_module.registration.status",
-            "my_module.registration.action"
+            "webapp.sn",
+            "webapp.registration.temp_id",
+            "webapp.registration.phone",
+            "webapp.registration.name",
+            "webapp.registration.status",
+            "webapp.registration.action"
         ]
         let itemFormatters = [
         (e, idx) => <FakeInput
@@ -292,6 +294,8 @@ class RegistrationPage extends Component{
             
         />,
             (e) => e.id,
+            e => e.phoneNumber==null ? "n/a" : e.phoneNumber,
+            e => e.nameOfHead==null ? "n/a" : e.nameOfHead,
             e => this.getStatus(e),
              e => {
                 return(
@@ -318,7 +322,7 @@ class RegistrationPage extends Component{
                     <Grid item xs={6} className={classes.item}>
                             <PublishedComponent pubRef="core.DatePicker"
                                 value=""
-                                module="my_module"
+                                module="webapp"
                                 label="Submission Date"
                                 onChange={d => this.dateChange([
                                     {
@@ -333,7 +337,7 @@ class RegistrationPage extends Component{
 
 
               <Table
-                  module = "my_module"
+                  module = "webapp"
                   header = {notice_header}
                   headers = {headers}
                   itemFormatters = {itemFormatters}
@@ -351,11 +355,11 @@ class RegistrationPage extends Component{
     }
 }
 const mapStateToProps = state => ({
-    fetchingTempRegs : state.my_module.fetchingTempRegs,
-    errorTempRegs : state.my_module.errorTempRegs,
-    fetchedTempRegs : state.my_module.fetchedTempRegs,
-    tempRegs : state.my_module.tempRegs,
-    tempRegsPageInfo : state.my_module.tempRegsPageInfo
+    fetchingTempRegs : state.webapp.fetchingTempRegs,
+    errorTempRegs : state.webapp.errorTempRegs,
+    fetchedTempRegs : state.webapp.fetchedTempRegs,
+    tempRegs : state.webapp.tempRegs,
+    tempRegsPageInfo : state.webapp.tempRegsPageInfo
 
 })
 const mapDispatchToProps = dispatch => {
