@@ -23,7 +23,10 @@
     "webapp.registration.action" : "Action",
 
     "webapp.registration.phone" : "Register's Phone",
-    "webapp.registration.name" : "Register's Name"
+    "webapp.registration.name" : "Register's Name",
+
+    "noticeForm.title" : "Notice Title",
+    "noticeForm.description" : "Notice Description"
 
 
 
