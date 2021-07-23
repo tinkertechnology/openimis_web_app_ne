@@ -17,24 +17,27 @@ import FeedbackPage from "./pages/FeedbackPage";
 import RegistrationPage from "./pages/RegistrationPage";
 
 
+const ROUTE_WEBAPP_NOTICE = "webapp/notice";
+const ROUTE_WEBAPP_NOTICES = "webapp/notices";
 
 const DEFAULT_CONFIG = {
-  "translations": [{ key: 'en', messages: messages_en }],
-  "reducers": [{ key: 'webapp', reducer }],
-  "core.MainMenu" : [WebappMainMenu],
-  "refs": [
-    { key: "webapp.route.notice_edit", ref: ADD_NOTICE },
-  ],
-  "core.Router": [
-    { path: ROUTE_TO_NOTICE, component: NoticesPage },
-    { path: ADD_NOTICE+"/:notice_id?", component: NoticePage },
-    // { path: EDIT_NOTICE +"/:notice_id", component: NoticePage },
-    { path: PAYMENTS_PAGE, component: PaymentsPage },
-    { path: FEEDBACK_PAGE, component: FeedbackPage },
-    { path: REGISTRATIONS_PAGE, component: RegistrationPage },
-    
-  ],
+	"translations": [{ key: 'en', messages: messages_en }],
+	"reducers": [{ key: 'webapp', reducer }],
+	"core.MainMenu" : [WebappMainMenu],
+	"refs": [
+		{ key: "webapp.route.notice_edit", ref: ADD_NOTICE },
+		{ key: "webapp.route.notice", ref: ROUTE_WEBAPP_NOTICE },
+		{ key: "webapp.route.notices", ref: ROUTE_WEBAPP_NOTICES },
+	],
+	"core.Router": [
+		{ path: ROUTE_TO_NOTICE, component: NoticesPage },
+		{ path: ADD_NOTICE+"/:notice_id?", component: NoticePage },
+		// { path: EDIT_NOTICE +"/:notice_id", component: NoticePage },
+		{ path: PAYMENTS_PAGE, component: PaymentsPage },
+		{ path: FEEDBACK_PAGE, component: FeedbackPage },
+		{ path: REGISTRATIONS_PAGE, component: RegistrationPage },
+	],
 }
 export const FeWebapp = (cfg) => {
-  return { ...DEFAULT_CONFIG, ...cfg };
+	return { ...DEFAULT_CONFIG, ...cfg };
 }

@@ -1,0 +1,2 @@
+export const RIGHT_NOTICE_ADD = 101102;
+export const RIGHT_NOTICE_EDIT = 101103;

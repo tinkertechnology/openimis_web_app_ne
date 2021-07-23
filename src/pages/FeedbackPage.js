@@ -1,174 +1,41 @@
-import React, {Component} from "react"
-import {withTheme, withStyles} from "@material-ui/core/styles";
-import {connect} from "react-redux";
-import { bindActionCreators } from "redux";
-import {FormattedMessage,TextInput, ProgressOrError, withModulesManager, withHistory, Table, FakeInput} from "@openimis/fe-core";
-import { fetchFeedbacks } from "../actions";
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import { injectIntl } from 'react-intl';
-import {Keyboard, ScreenShare} from "@material-ui/icons";
-import { IconButton, Paper, Grid, Typography } from "@material-ui/core";
+import { withTheme, withStyles } from "@material-ui/core/styles";
+import { historyPush, withModulesManager, withHistory, withTooltip, formatMessage } from "@openimis/fe-core";
+import FeedbackSearcher from "../components/FeedbackSearcher";
 
 
 const styles = theme => ({
     page: theme.page,
+    fab: theme.fab
 });
 
+class FeedbackPage extends Component {
 
-class FeedbackPage extends Component{
+    // onDoubleClick = (i, newTab = false) => {
+    //     historyPush(this.props.modulesManager, this.props.history, "webapp.route.notice", [i.id], newTab)
+    // }
 
-    state = {
-        page: 0,
-        pageSize : 10,
-        afterCursor : null,
-        beforeCursor : null,
-        edited: {
-            title: null
-        }
-    }
+    // onAdd = () => {
+    //     historyPush(this.props.modulesManager, this.props.history, "webapp.route.notice");
+    // }
 
-    componentDidMount(){
-        // this.props.fetchNotices();
-        this.query();
-    }
-
-    query = () => {
-        let prms = [];
-        // prms.push(`title_Icontains: ${this.state.edited.title==null? "": this.state.edited.title}`);
-        prms.push( `first: ${this.state.pageSize}`);
-        if(!!this.state.afterCursor){
-            prms.push(`after: "${this.state.afterCursor}"`)
-        }
-        if(!!this.state.beforeCursor){
-            prms.push(`before: "${this.state.beforeCursor}"`)
-        }
-        prms.push(`orderBy: ["-id"]`);
-        this.props.fetchFeedbacks(prms);
-
-    }
-    onChangeRowsPerPage=(count)=>{
-        this.setState(
-            {
-                pageSize:count,
-                page:0,
-                afterCursor: null,
-                beforeCursor: null
-            },
-            e => this.query()
-        )
-    }
-
-    onChangePage =(page, nbr) =>{
-        if(nbr > this.state.page){
-            this.setState((state, props) => ({
-                page: state.page+1,
-                beforeCursor: null,
-                afterCursor: props.FeedbackPageInfo.endCursor
-            }),
-            e=> this.query()
-            )
-        }
-        else {
-            if(nbr < this.state.page){
-                this.setState( (state,props)=>({
-                    page:state.page-1,
-                    beforeCursor : props.FeedbackPageInfo.startCursor,
-                    afterCursor : null
-                } ),
-                e => this.query()
-                )
-            }
-        }
-    }
-
-    updateAttribute = (k,v) => {
-        this.setState((state)=> ({
-            edited: {...state.edited, [k]: v}
-        }),
-         e => this.query() //console.log('STATE' +JSON.stringify(this.state))
-         
-        )
-    }
-
-
-    render(){
-        const {edited} = this.state;
-
-        const { fetchingFeedbacks,classes, errorFeedbacks, feedbacks, feedbacksPageInfo} = this.props;
-        
-        let headers = [
-            "webapp.sn",
-            "webapp.feedback.name",
-            "webapp.feedback.email",
-            "webapp.feedback.mobile_number",
-            "webapp.feedback.feedback_text",
-            // "webapp.action"
-        ]
-        let itemFormatters = [
-        (e, idx) => <FakeInput
-            readOnly={true}
-            value={idx+1}
-            
-        />,
-            (e) => e.fullname,
-            e => e.emailAddress,
-            e=>e.mobileNumbeer,
-            e=>e. queries,
-
-          
-            
-        ]
-        var notice_header = "Published Notices" //+FeedbackPageInfo.totalCount;
-
+    render() {
+        const { intl, classes, rights } = this.props;
         return (
-        <div className={classes.page}>
-                <ProgressOrError progress={fetchingFeedbacks} error={errorFeedbacks} />
-            
-            <Grid container>
-                    <Grid item>
-                        <TextInput
-                            module="webapp" label = "noticeForm.title"
-                            value={edited.title}
-                            required = {true}
-                            inputProps={{
-                                "maxLength": this.codeMaxLength,
-                            }}
-                            onChange={v=>this.updateAttribute("title", v)}
-                        />
-                    </Grid>
-            </Grid>
-            
-            
-              <Table
-                  module = "webapp"
-                  header = {notice_header}
-                  headers = {headers}
-                  itemFormatters = {itemFormatters}
-                  items = {feedbacks}
-                  withPagination={true}
-                  page = {this.state.page}
-                  pageSize = {this.state.pageSize}
-                  count = {feedbacksPageInfo.totalCount }
-                  onChangePage={this.onChangePage}
-                  onChangeRowsPerPage={this.onChangeRowsPerPage}
-              />
-            
-        </div>
+            <div className={classes.page}>
+                <FeedbackSearcher
+                    cacheFiltersKey="webappFeedbackPageFiltersCache"
+                    onDoubleClick={this.onDoubleClick}
+                />
+            </div >
         )
     }
 }
+
 const mapStateToProps = state => ({
-    fetchingFeedbacks : state.webapp.fetchingFeedbacks,
-    errorFeedbacks : state.webapp.errorFeedbacks,
-    fetchedFeedbacks : state.webapp.fetchedFeedbacks,
-    feedbacks : state.webapp.feedbacks,
-    feedbacksPageInfo : state.webapp.feedbacksPageInfo
-
+    rights: !!state.core && !!state.core.user && !!state.core.user.i_user ? state.core.user.i_user.rights : [],
 })
-const mapDispatchToProps = dispatch => {
-    return bindActionCreators({fetchFeedbacks}, dispatch);
-}
 
-//export default withTheme(withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(FeedbackPage)))
-export default injectIntl(withModulesManager(withHistory(connect(mapStateToProps, mapDispatchToProps)(
-    withTheme(withStyles(styles)(FeedbackPage))
-))));
+export default injectIntl(withModulesManager(withHistory(connect(mapStateToProps)(withTheme(withStyles(styles)(FeedbackPage))))));
