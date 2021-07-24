@@ -14,12 +14,11 @@ const styles = theme => ({
 class PaymentsPage extends Component {
 
     render() {
-        const { intl, classes, rights } = this.props;
+        const { classes } = this.props;
         return (
             <div className={classes.page}>
                 <PaymentSearcher
                     cacheFiltersKey="webappPaymentsPageFiltersCache"
-                    onDoubleClick={this.onDoubleClick}
                 />
             </div >
         )

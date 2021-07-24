@@ -26,7 +26,12 @@
     "webapp.registration.name" : "Register's Name",
 
     "noticeForm.title" : "Notice Title",
-    "noticeForm.description" : "Notice Description"
+    "noticeForm.description" : "Notice Description",
+    
+    "paymentForm.chfid": "CHFID",
+    "paymentForm.name": "Payment Name",
+    "webapp.payment.code": "Code",
+    "webapp.payment.name": "Voucher"
 
 
 

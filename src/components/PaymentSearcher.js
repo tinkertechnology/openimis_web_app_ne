@@ -5,14 +5,15 @@ import { injectIntl } from 'react-intl';
 
 import {
     withModulesManager, formatMessageWithValues, formatDateFromISO, formatMessage,
-    withHistory, 
-    Searcher
+    withHistory,
+    Searcher,
 } from "@openimis/fe-core";
+
 import { fetchPayments } from "../actions";
-// import FeedbackFilter from "./FeedbackFilter";
 
+import PaymentFilter from "./PaymentFilter";
 
-const PAYMENT_SEARCHER_CONTRIBUTION_KEY = "webapp.FeedbackSearcher";
+const NOTICE_SEARCHER_CONTRIBUTION_KEY = "webapp.NoticeSearcher";
 
 class PaymentSearcher extends Component {
 
@@ -25,10 +26,9 @@ class PaymentSearcher extends Component {
 
     constructor(props) {
         super(props);
-        this.rowsPerPageOptions = props.modulesManager.getConf("fe-webapp", "paymentsFilter.rowsPerPageOptions", [10, 20, 50, 100]);
-        this.defaultPageSize = props.modulesManager.getConf("fe-webapp", "paymentsFilter.defaultPageSize", 10);
+        this.rowsPerPageOptions = props.modulesManager.getConf("fe-webapp", "noticeFilter.rowsPerPageOptions", [10, 20, 50, 100]);
+        this.defaultPageSize = props.modulesManager.getConf("fe-webapp", "noticeFilter.defaultPageSize", 10);
     }
-    
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.submittingMutation && !this.props.submittingMutation) {
@@ -41,33 +41,36 @@ class PaymentSearcher extends Component {
 
     fetch = (prms) => {
         this.props.fetchPayments(
-            this.props.modulesManager,
+            // this.props.modulesManager,
             prms
         )
     }
 
-    // rowIdentifier = (r) => r.id
+    rowIdentifier = (r) => r.id
 
-    // filtersToQueryParams = (state) => {
-    //     let prms = Object.keys(state.filters)
-    //         .filter(f => !!state.filters[f]['filter'])
-    //         .map(f => state.filters[f]['filter']);
-    //     // let prms = [];
-    //     // prms.push(`insuree_ChfId_Icontains: ${this.state.edited.chfid==null ? `""`: `"${this.state.edited.chfid}"`},
-    //     //          insuree_OtherNames_Icontains: ${this.state.edited.insuree_name==null ? `""`: `"${this.state.edited.insuree_name}"`}`);
-    //     prms.push( `first: ${this.state.pageSize}`);
-    //     if (!!state.afterCursor) {
-    //         prms.push(`after: "${state.afterCursor}"`)
-    //     }
-    //     if (!!state.beforeCursor) {
-    //         prms.push(`before: "${state.beforeCursor}"`)
-    //     }
-    //     if (!!state.orderBy) {
-    //         // prms.push(`orderBy: ["${state.orderBy}"]`);
-    //         prms.push(`orderBy: ["-created_at"]`);
-    //     }
-    //     return prms;
-    // }
+    filtersToQueryParams = (state) => {
+        let prms = Object.keys(state.filters)
+            .filter(f => !!state.filters[f]['filter'])
+            .map(f => state.filters[f]['filter']);
+        // let prms = [];
+        // prms.push(state.filters);
+        console.log(prms);
+        
+        // prms.push(`title_Icontains: ${this.state.edited.title==null ? `""`: `"${this.state.edited.title}"`}`);
+        // prms.push( `first: ${this.state.pageSize}`);
+
+        prms.push( `first: 10`);
+        if (!!state.afterCursor) {
+            prms.push(`after: "${state.afterCursor}"`)
+        }
+        if (!!state.beforeCursor) {
+            prms.push(`before: "${state.beforeCursor}"`)
+        }
+        if (!!state.orderBy) {
+            prms.push(`orderBy: ["${state.orderBy}"]`);
+        }
+        return prms;
+    }
 
     updateAttribute = (k,v) => {
         console.log('STATE' +JSON.stringify(this.state))
@@ -138,34 +141,31 @@ class PaymentSearcher extends Component {
 
     headers = () => {
         var h = [
-            "webapp.sn",
-            "webapp.code",
-            "webapp.name",
+            "webapp.payment.code",
+            "webapp.payment.name",
             "webapp.Insuree",
             "webapp.chfid",
             "webapp.action"
-        ]
+        ];
+
         return h;
     }
 
-    // sorts = (filters) => {
-    //     var results = [
-    //         ['code', true],
-    //         ['name', true],
-    //         ['Insuree', true],
-    //         ['chfid', true],
-    //     ];
+    sorts = (filters) => {
+        var results = [
+            ['title', true],
+            ['description', true],
+        ];
 
-    //     return results;
-    // }
+        return results;
+    }
 
     itemFormatters = (filters) => {
         var formatters = [
-            // voucherPayments => voucherPayments.id,
-            // voucher => voucher.voucher,
-            // voucherPayments => voucherPayments.name,
-            // voucherPayments => voucherPayments.Insuree,
-            // voucherPayments => voucherPayments.chfid,
+            payments => payments.id,
+            payments => payments.voucher,
+            payments => payments.getName,
+            payments => payments.getInsuree
         ]
 
         return formatters;
@@ -185,20 +185,20 @@ class PaymentSearcher extends Component {
                 <Searcher
                     module="webapp"
                     cacheFiltersKey={cacheFiltersKey}
-                    // FilterPane={FeedbackFilter}
-                    // filterPaneContributionsKey={filterPaneContributionsKey}
+                    FilterPane={PaymentFilter}
+                    filterPaneContributionsKey={filterPaneContributionsKey}
                     items={voucherPayments}
                     itemsPageInfo={voucherPaymentsPageInfo}
                     fetchingItems={fetchingvoucherPayments}
                     fetchedItems={fetchedvoucherPayments}
                     errorItems={errorvoucherPayments}
-                    contributionKey={PAYMENT_SEARCHER_CONTRIBUTION_KEY}
-                    tableTitle={formatMessageWithValues(intl, "webapp", "voucherPayments", { count })}
+                    contributionKey={NOTICE_SEARCHER_CONTRIBUTION_KEY}
+                    tableTitle={formatMessageWithValues(intl, "webapp", "Voucher", { count })}
                     rowsPerPageOptions={this.rowsPerPageOptions}
                     defaultPageSize={this.defaultPageSize}
                     fetch={this.fetch}
                     filtersToQueryParams={this.filtersToQueryParams}
-                    
+                    defaultOrderBy="id"
                     headers={this.headers}
                     itemFormatters={this.itemFormatters}
                     sorts={this.sorts}
