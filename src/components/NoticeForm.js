@@ -34,7 +34,9 @@ class NoticeForm extends Component {
     }
 
     componentDidMount() {
-        document.title = formatMessageWithValues(this.props.intl, "webapp", "noticeForm.title", { label: "noticeForm.title" })
+        document.title = formatMessageWithValues(
+            this.props.intl, "webapp", "webapp.notice.title", { label: "webapp.notice.title" }
+        )
         if (!!this.props.notice_id) {
             this.setState(
                 (state, props) => ({ notice_id: props.notice_id }),

@@ -20,43 +20,43 @@ class NoticePage extends Component {
         historyPush(this.props.modulesManager, this.props.history, "webapp.route.notice")
     }
 
-    // save = (notice) => {
-    //     if (!notice.id) {
-    //         this.props.createNotice(
-    //             this.props.modulesManager,
-    //             notice,
-    //             formatMessageWithValues(
-    //                 this.props.intl,
-    //                 "notice",
-    //                 "CreateNotice.mutationLabel",
-    //                 { label: !!notice.title ? notice.title : "" }
-    //             )
-    //         );
-    //     } else {
-    //         this.props.updateNotice(
-    //             this.props.modulesManager,
-    //             notice,
-    //             formatMessageWithValues(
-    //                 this.props.intl,
-    //                 "notice",
-    //                 "UpdateNotice.mutationLabel",
-    //                 { label: !!notice.id ? notice.id : "" }
-    //             )
-    //         );
+    save = (notice) => {
+        if (!notice.id) {
+            this.props.createNotice(
+                this.props.modulesManager,
+                notice,
+                formatMessageWithValues(
+                    this.props.intl,
+                    "notice",
+                    "CreateNotice.mutationLabel",
+                    { label: !!notice.title ? notice.title : "" }
+                )
+            );
+        } else {
+            this.props.updateNotice(
+                this.props.modulesManager,
+                notice,
+                formatMessageWithValues(
+                    this.props.intl,
+                    "notice",
+                    "UpdateNotice.mutationLabel",
+                    { label: !!notice.id ? notice.id : "" }
+                )
+            );
 
-    //     }
-    // }
-
-    save = e => {
-        if(!this.props.notice_id){
-            this.props.createNotice(this.state.edited)
-            return
         }
-
-        this.props.updateNotice(this.state.edited, this.props.notice_id)
-
-        console.log("SAVEED");
     }
+
+    // save = e => {
+    //     if(!this.props.notice_id){
+    //         this.props.createNotice(this.state.edited)
+    //         return
+    //     }
+
+    //     this.props.updateNotice(this.state.edited, this.props.notice_id)
+
+    //     console.log("SAVEED");
+    // }
 
     setStateEdited =(e)=> {
         console.log('notice-page')

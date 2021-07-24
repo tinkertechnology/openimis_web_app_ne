@@ -24,11 +24,13 @@ const DEFAULT_CONFIG = {
 	"translations": [{ key: 'en', messages: messages_en }],
 	"reducers": [{ key: 'webapp', reducer }],
 	"core.MainMenu" : [WebappMainMenu],
+	
 	"refs": [
 		{ key: "webapp.route.notice_edit", ref: ADD_NOTICE },
 		{ key: "webapp.route.notice", ref: ROUTE_WEBAPP_NOTICE },
 		{ key: "webapp.route.notices", ref: ROUTE_WEBAPP_NOTICES },
 	],
+	
 	"core.Router": [
 		{ path: ROUTE_TO_NOTICE, component: NoticesPage },
 		{ path: ADD_NOTICE+"/:notice_id?", component: NoticePage },
@@ -38,6 +40,8 @@ const DEFAULT_CONFIG = {
 		{ path: REGISTRATIONS_PAGE, component: RegistrationPage },
 	],
 }
+
+
 export const FeWebapp = (cfg) => {
 	return { ...DEFAULT_CONFIG, ...cfg };
 }

@@ -70,14 +70,14 @@ class PaymentFilter extends Component {
                 <ControlledField module="webapp" id="paymentFilter.chfid" field={
                     <Grid item xs={3} className={classes.item}>
                         <TextInput
-                            module="webapp" label="paymentForm.chfid"
+                            module="webapp" label="webapp.payment.chfid"
                             name="chfid"
                             value={this._filterValue('chfid')}
                             onChange={v => this.debouncedOnChangeFilter([
                                 {
                                     id: 'chfid',
                                     value: v,
-                                    filter: `chfid_Icontains: "${v}"`
+                                    filter: `insuree_Chfid_Icontains: "${v}"`
                                 }
                             ])}
                         />
@@ -87,14 +87,14 @@ class PaymentFilter extends Component {
                 <ControlledField module="webapp" id="paymentFilter.name" field={
                     <Grid item xs={3} className={classes.item}>
                         <TextInput
-                            module="webapp" label="paymentForm.name"
+                            module="webapp" label="webapp.payment.insureename"
                             name="name"
                             value={this._filterValue('name')}
                             onChange={v => this.debouncedOnChangeFilter([
                                 {
                                     id: 'name',
                                     value: v,
-                                    filter: `name_Icontains: "${v}"`
+                                    filter: `insuree_LastName_Icontains: "${v}"`
                                 }
                             ])}
                         />

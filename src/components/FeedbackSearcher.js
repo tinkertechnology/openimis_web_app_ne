@@ -41,7 +41,7 @@ class FeedbackSearcher extends Component {
 
     fetch = (prms) => {
         this.props.fetchFeedbacks(
-            this.props.modulesManager,
+            // this.props.modulesManager,
             prms
         )
     }
@@ -54,7 +54,7 @@ class FeedbackSearcher extends Component {
             .map(f => state.filters[f]['filter']);
         // let prms = [];
         // prms.push(`title_Icontains: ${this.state.edited.title==null ? `""`: `"${this.state.edited.title}"`}`);
-        prms.push( `first: ${this.state.pageSize}`);
+        prms.push( `first: 10`);
         if (!!state.afterCursor) {
             prms.push(`after: "${state.afterCursor}"`)
         }
@@ -69,7 +69,6 @@ class FeedbackSearcher extends Component {
 
     headers = () => {
         var h = [
-            "webapp.sn",
             "webapp.feedback.name",
             "webapp.feedback.email",
             "webapp.feedback.mobile_number",
@@ -81,10 +80,10 @@ class FeedbackSearcher extends Component {
 
     sorts = (filters) => {
         var results = [
-            ['name', true],
-            ['email', true],
+            ['fullname', true],
+            ['email_address', true],
             ['mobile_number', true],
-            ['feedback_text', true],
+            ['queries', true],
         ];
 
         return results;
@@ -92,11 +91,10 @@ class FeedbackSearcher extends Component {
 
     itemFormatters = (filters) => {
         var formatters = [
-            feedback => feedback.id,
-            feedback => feedback.fullname,
-            feedback => feedback.emailAddress,
-            feedback => feedback.mobileNumber,
-            feedback => feedback.queries,
+            e => e.fullname,
+            e => e.emailAddress,
+            e => e.mobileNumber,
+            e => e.queries,
         ]
 
         return formatters;
@@ -124,7 +122,7 @@ class FeedbackSearcher extends Component {
                     fetchedItems={fetchedFeedbacks}
                     errorItems={errorFeedbacks}
                     contributionKey={FEEDBACK_SEARCHER_CONTRIBUTION_KEY}
-                    tableTitle={formatMessageWithValues(intl, "webapp", "feedbacks", { count })}
+                    tableTitle={formatMessageWithValues(intl, "webapp", "feedbackSummaries", { count })}
                     rowsPerPageOptions={this.rowsPerPageOptions}
                     defaultPageSize={this.defaultPageSize}
                     fetch={this.fetch}

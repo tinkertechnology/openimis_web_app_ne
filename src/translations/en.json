@@ -7,31 +7,31 @@
     "webapp.chfid" : "Search CHFID",
     "webapp.Insuree" : "Inusree Name",
     "webapp.action" : "Action",
+    
 
-
+    "webapp.noticeSummaries": "{count} Notice's Found",
+    "webapp.addNewNoticeTooltip": "Add New Notice",
     "webapp.notice.title" : "Notice Title",
     "webapp.notice.description" : "Description",
 
-
+    "webapp.feedbackSummaries": "{count} Feedback's Found",
     "webapp.feedback.name" : "Name of Feedback Person",
     "webapp.feedback.email" : "Email",
-    "webapp.feedback.feedback_text" : "Feedback Text",
+    "webapp.feedback.feedback_text" : "Feedback",
     "webapp.feedback.mobile_number" : "Mobile",
 
+    "webapp.paymentSummaries": "{count} Payment's Request Found",
+    "webapp.payment.chfid": "CHFID",
+    "webapp.payment.insureename": "Insuree Name",
+    "webapp.payment.code": "Code",
+    "webapp.payment.name": "Voucher",
+
+    "webapp.registrationSummaries": "{count} Registration Found",
     "webapp.registration.temp_id" : "TempID",
     "webapp.registration.status" : "Status",
     "webapp.registration.action" : "Action",
-
     "webapp.registration.phone" : "Register's Phone",
-    "webapp.registration.name" : "Register's Name",
-
-    "noticeForm.title" : "Notice Title",
-    "noticeForm.description" : "Notice Description",
-    
-    "paymentForm.chfid": "CHFID",
-    "paymentForm.name": "Payment Name",
-    "webapp.payment.code": "Code",
-    "webapp.payment.name": "Voucher"
+    "webapp.registration.name" : "Register's Name"
 
 
 

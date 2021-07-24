@@ -75,7 +75,7 @@ class InsureeMasterPanel extends FormPanel {
                                 <TextInput
                                     autoFocus={true}
                                     module="webapp"
-                                    label="noticeForm.title"
+                                    label="webapp.notice.title"
                                     value={edited.title}
                                     required={true}
                                     inputProps={{"maxlength": this.codeMaxLength,}}
@@ -87,7 +87,7 @@ class InsureeMasterPanel extends FormPanel {
                                 <TextInput
                                     autoFocus={true}
                                     module="webapp"
-                                    label="noticeForm.description"
+                                    label="webapp.notice.description"
                                     value={edited.description}
                                     required={true}
                                     inputProps={{"maxlength": this.codeMaxLength,}}

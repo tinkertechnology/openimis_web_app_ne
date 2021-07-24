@@ -76,7 +76,7 @@ class FeedbackFilter extends Component {
                                 {
                                     id: 'name',
                                     value: v,
-                                    filter: `name_Icontains: "${v}"`
+                                    filter: `fullname_Icontains: "${v}"`
                                 }
                             ])}
                         />
@@ -93,7 +93,7 @@ class FeedbackFilter extends Component {
                                 {
                                     id: 'email',
                                     value: v,
-                                    filter: `email_Icontains: "${v}"`
+                                    filter: `email_address_Icontains: "${v}"`
                                 }
                             ])}
                         />

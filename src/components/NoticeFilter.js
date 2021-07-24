@@ -70,7 +70,7 @@ class NoticeFilter extends Component {
                 <ControlledField module="webapp" id="noticeFilter.title" field={
                     <Grid item xs={3} className={classes.item}>
                         <TextInput
-                            module="webapp" label="noticeForm.title"
+                            module="webapp" label="webapp.notice.title"
                             name="title"
                             value={this._filterValue('title')}
                             onChange={v => this.debouncedOnChangeFilter([
@@ -87,7 +87,7 @@ class NoticeFilter extends Component {
                 <ControlledField module="webapp" id="noticeFilter.description" field={
                     <Grid item xs={3} className={classes.item}>
                         <TextInput
-                            module="webapp" label="noticeForm.description"
+                            module="webapp" label="webapp.notice.description"
                             name="description"
                             value={this._filterValue('description')}
                             onChange={v => this.debouncedOnChangeFilter([

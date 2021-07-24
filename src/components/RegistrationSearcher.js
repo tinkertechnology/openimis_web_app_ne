@@ -2,18 +2,132 @@ import React, { Component, Fragment } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { injectIntl } from 'react-intl';
-
 import {
     withModulesManager, formatMessageWithValues, formatDateFromISO, formatMessage,
     withHistory, 
-    Searcher
+    Searcher, decodeId
 } from "@openimis/fe-core";
-
 import { fetchTemporaryRegistration } from "../actions";
 import RegistrationFilter from "./RegistrationFilter";
 
+import PageviewIcon from '@material-ui/icons/Pageview';
+import CloseIcon from '@material-ui/icons/Close';
+import ZoomInIcon from '@material-ui/icons/ZoomIn';
+import ZoomOutIcon from '@material-ui/icons/ZoomOut';
+import { pink } from '@material-ui/core/colors';
+
 
 const REGISTRATION_SEARCHER_CONTRIBUTION_KEY = "webapp.RegistrationSearcher";
+
+//http://localhost:3000/webapp/registrations?previewDomain=http://localhost:8055
+
+function getUrlParameterRegistrationPage(sParam) {
+    console.log('getUrlParameter');
+  
+      var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+          sURLVariables = sPageURL.split('&'),
+          sParameterName,
+          i;
+  
+      for (i = 0; i < sURLVariables.length; i++) {
+          sParameterName = sURLVariables[i].split('=');
+  
+          if (sParameterName[0] === sParam) {
+              return sParameterName[1] === undefined ? true : sParameterName[1];
+          }
+      }
+  }
+  class AttachmentsDialogPreview extends Component {
+      attachments = [];
+      state = {
+          visible: false,
+          i:0,
+          scale: 0.5,
+  
+      }
+      componentDidMount() {        
+          var thisRef = this;
+      }
+      show(){
+          //this.setState({visible: !this.state.visible})
+          this.setState({visible: !this.state.visible})
+      }
+      hide(){
+          this.props.hide()
+          //this.setState({iframesrc: null})
+      }
+      changeScale = (i) => {
+          i = this.state.scale+i;
+          i = (i < 0.1) ? 0.1 : i;
+          i = (i > 1 ) ? 1 : i;
+          this.setState({scale: i})
+      }
+      getUrl(attachment){
+          var previewDomain=getUrlParameterRegistrationPage('previewDomain');
+          if (previewDomain){ return previewDomain+attachment; }
+          return attachment;
+  
+          console.log(attachment);
+          return attachment
+          return 'https://picsum.photos/seed/1/1000/1000';
+          var url = new URL(`${window.location.origin}${baseApiUrl}/claim/attach`);
+          url.search = new URLSearchParams({ id: decodeId(attachment.id) });
+          return url;
+      }
+  
+       styles = {
+          position: "fixed",
+          width: "100vw",
+          height: "100vh",
+          top: "0",
+          left: "0",
+          background: "#000000dd",
+          zIndex: "9999"
+      };      
+  
+    render() {
+        const {urls, attachments, iframesrc} = this.props; //extract url from images
+        //console.log('attachments', attachments);
+        this.attachments = attachments;
+        //console.log(urls, this.props);
+      return <Fragment>
+         { (iframesrc !=null) && (
+          <Container>
+          <div style={this.styles}>
+  
+              
+              <center>
+              <iframe src={this.getUrl(iframesrc)} style={{height:"90vh", width:"90vw"}}/> 
+              </center>
+                 
+                 {/* <iframe src="{this.getUrl(iframesrc)} style={{height:"80vh", width:"80vw", transform: `scale(${this.state.scale})`}}" /> */}
+               
+                 <Divider />
+                 
+                 <center>
+                      <ZoomInIcon onClick={e => this.changeScale(0.1)} />
+                      <ZoomOutIcon onClick={e => this.changeScale(-0.1)} />
+                      <CloseIcon onClick={e => this.hide()} />  
+                      <Grid item xs={6}>
+                          <Paper>
+                          <Grid container>
+                              <Grid item>
+                              <Button class="btn btn-primary">Approve</Button>
+                              
+                              </Grid>
+                          </Grid>
+                          </Paper>
+                      </Grid>
+                 </center>  
+          </div>
+  
+  
+          </Container>
+         )}
+      
+       </Fragment>
+    }
+  }
 
 class RegistrationSearcher extends Component {
 
@@ -57,7 +171,7 @@ class RegistrationSearcher extends Component {
 
     fetch = (prms) => {
         this.props.fetchTemporaryRegistration(
-            this.props.modulesManager,
+            // this.props.modulesManager,
             prms
         )
     }
@@ -69,7 +183,7 @@ class RegistrationSearcher extends Component {
             .filter(f => !!state.filters[f]['filter'])
             .map(f => state.filters[f]['filter']);
 
-        prms.push( `first: ${this.state.pageSize}`);
+        prms.push( `first: 10`);
         if (!!state.afterCursor) {
             prms.push(`after: "${state.afterCursor}"`)
         }
@@ -171,30 +285,35 @@ class RegistrationSearcher extends Component {
 
     itemFormatters = (filters) => {
         var formatters = [
-            tempRegs => tempRegs.id,
-            tempRegs => tempRegs.phoneNumber,
-            tempRegs => tempRegs.nameOfHead,
-            
-            tempRegs => tempRegs.getStatus,
+            e => e.id,
+            e => e.phoneNumber==null ? "N/A" : e.phoneNumber,
+            e => e.nameOfHead==null ? "N/A" : e.nameOfHead,
+            e => this.getStatus(e),
         ]
+
+        formatters.push(
+            e => (
+                <PageviewIcon onClick={c => this.previewVoucher(e)} />
+            )
+        )
 
         return formatters;
     }
 
 
     render() {
-        const { intl,
+        const { 
+            intl,
             tempRegs, tempRegsPageInfo, fetchingTempRegs, fetchedTempRegs, errorTempRegs,
             filterPaneContributionsKey, cacheFiltersKey
         } = this.props;
 
         let count = tempRegsPageInfo.totalCount;
-        // console.log(count);
 
         return (
             <Fragment>
                 {/* <ProgressOrError progress={fetchingTempRegs} error={errorTempRegs} /> */}
-                {/* <AttachmentsDialogPreview iframesrc={this.state.iframesrc} hide={this.previewVoucherCloseFn}/> */}
+                <AttachmentsDialogPreview iframesrc={this.state.iframesrc} hide={this.previewVoucherCloseFn}/>
                 <Searcher
                     module="webapp"
                     cacheFiltersKey={cacheFiltersKey}
@@ -206,7 +325,7 @@ class RegistrationSearcher extends Component {
                     fetchedItems={fetchedTempRegs}
                     errorItems={errorTempRegs}
                     contributionKey={REGISTRATION_SEARCHER_CONTRIBUTION_KEY}
-                    tableTitle={formatMessageWithValues(intl, "webapp", "tempRegs", { count })}
+                    tableTitle={formatMessageWithValues(intl, "webapp", "registrationSummaries", { count })}
                     rowsPerPageOptions={this.rowsPerPageOptions}
                     defaultPageSize={this.defaultPageSize}
                     fetch={this.fetch}

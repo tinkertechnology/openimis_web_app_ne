@@ -4,12 +4,11 @@ import { connect } from "react-redux";
 import { injectIntl } from 'react-intl';
 
 import {
-    withModulesManager, formatMessageWithValues, formatDateFromISO, formatMessage,
+    withModulesManager, formatMessageWithValues, historyPush,
     withHistory,
     Searcher,
 } from "@openimis/fe-core";
-// import EnquiryDialog from "./EnquiryDialog";
-// import { RIGHT_INSUREE_DELETE } from "../constants";
+import PageviewIcon from '@material-ui/icons/Pageview';
 import { fetchNotices } from "../actions";
 
 import NoticeFilter from "./NoticeFilter";
@@ -99,14 +98,20 @@ class NoticeSearcher extends Component {
 
     itemFormatters = (filters) => {
         var formatters = [
-            notice => notice.id,
-            notice => notice.title,
-            notice => notice.description,
+            e => e.id,
+            e => e.title,
+            e => e.description,
         ]
 
+        formatters.push(
+            e => (
+                <PageviewIcon onClick={c => this.editNotice(e)} />
+            )
+        )
         return formatters;
     }
 
+    editNotice = c => historyPush(this.props.modulesManager, this.props.history, "webapp.route.notice_edit", [c.id])
 
     render() {
         const { intl,
@@ -129,7 +134,7 @@ class NoticeSearcher extends Component {
                     fetchedItems={fetchedNotices}
                     errorItems={errorNotices}
                     contributionKey={NOTICE_SEARCHER_CONTRIBUTION_KEY}
-                    tableTitle={formatMessageWithValues(intl, "webapp", "notices", { count })}
+                    tableTitle={formatMessageWithValues(intl, "webapp", "noticeSummaries", { count })}
                     rowsPerPageOptions={this.rowsPerPageOptions}
                     defaultPageSize={this.defaultPageSize}
                     fetch={this.fetch}

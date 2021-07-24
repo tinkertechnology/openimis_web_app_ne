@@ -2,7 +2,10 @@ import React, { Component, Fragment } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { injectIntl } from 'react-intl';
-
+import AttachIcon from "@material-ui/icons/AttachFile";
+import {
+    IconButton, Tooltip
+} from "@material-ui/core";
 import {
     withModulesManager, formatMessageWithValues, formatDateFromISO, formatMessage,
     withHistory,
@@ -13,7 +16,90 @@ import { fetchPayments } from "../actions";
 
 import PaymentFilter from "./PaymentFilter";
 
+import Avatar from '@material-ui/core/Avatar';
+import PageviewIcon from '@material-ui/icons/Pageview';
+import SaveIcon from "@material-ui/icons/SaveAlt";
+import DeleteIcon from "@material-ui/icons/Delete";
+import FileIcon from "@material-ui/icons/Add";
+import CloseIcon from '@material-ui/icons/Close';
+import ArrowForwardRoundedIcon from '@material-ui/icons/ArrowForwardRounded';
+import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
+import ZoomInIcon from '@material-ui/icons/ZoomIn';
+import ZoomOutIcon from '@material-ui/icons/ZoomOut';
+import { pink } from '@material-ui/core/colors';
+
 const NOTICE_SEARCHER_CONTRIBUTION_KEY = "webapp.NoticeSearcher";
+
+class AttachmentsDialogPreview extends Component {
+    attachments = [];
+    state = {
+        visible: false,
+        i:0,
+        scale: 0.5,
+
+    }
+    componentDidMount() {        
+        var thisRef = this;
+    }
+    show(){
+        //this.setState({visible: !this.state.visible})
+        this.setState({visible: !this.state.visible})
+    }
+    hide(){
+        this.props.hide()
+        //this.setState({previewAttachment: null})
+    }
+    changeScale = (i) => {
+        i = this.state.scale+i;
+        i = (i < 0.1) ? 0.1 : i;
+        i = (i > 1 ) ? 1 : i;
+        this.setState({scale: i})
+    }
+    getUrl(attachment){
+        console.log(attachment);
+        return attachment.voucher;
+        return 'https://picsum.photos/seed/1/1000/1000';
+        var url = new URL(`${window.location.origin}${baseApiUrl}/claim/attach`);
+        url.search = new URLSearchParams({ id: decodeId(attachment.id) });
+        return url;
+    }
+
+     styles = {
+        position: "fixed",
+        width: "100vw",
+        height: "100vh",
+        top: "0",
+        left: "0",
+        background: "#000000dd",
+        zIndex: "9999"
+    };      
+
+  render() {
+      const {urls, attachments, previewAttachment} = this.props; //extract url from images
+      //console.log('attachments', attachments);
+      this.attachments = attachments;
+      //console.log(urls, this.props);
+    return <Fragment>
+       { (previewAttachment !=null) && (
+        <div style={this.styles}>
+
+            
+            <center>
+               <img src={this.getUrl(previewAttachment)} style={{height:"80vh", width:"80vw", transform: `scale(${this.state.scale})`}}/> 
+               </center>
+               <Divider />
+               
+               <center>
+                    <ZoomInIcon onClick={e => this.changeScale(0.1)} />
+                    <ZoomOutIcon onClick={e => this.changeScale(-0.1)} />
+                    <CloseIcon onClick={e => this.hide()} />  
+               </center>  
+        </div>
+       )}
+    
+     </Fragment>
+  }
+}
 
 class PaymentSearcher extends Component {
 
@@ -122,6 +208,7 @@ class PaymentSearcher extends Component {
 
     previewVoucher = c => { console.log(c); this.setState({previewAttachment: c}); }
     previewVoucherCloseFn = c=> { console.log(c); this.setState({previewAttachment: null}); }
+    
     getName = c => {
         return c 
             ? c.insuree
@@ -130,6 +217,7 @@ class PaymentSearcher extends Component {
             :""; 
         
     }
+
     getInsuree = (c, k) => {
         return c 
             ? c.insuree
@@ -153,23 +241,38 @@ class PaymentSearcher extends Component {
 
     sorts = (filters) => {
         var results = [
-            ['title', true],
-            ['description', true],
+            ['id', true],
+            ['voucher', true],
+            ['insuree_Chfid', true],
+            ['insuree_LastName', true],
         ];
 
         return results;
     }
 
-    itemFormatters = (filters) => {
+    itemFormatters = () => {
         var formatters = [
-            payments => payments.id,
-            payments => payments.voucher,
-            payments => payments.getName,
-            payments => payments.getInsuree
+            e => e.id,
+            e => e.voucher,
+            e => this.getName(e),
+            e => this.getInsuree(e, 'chfId'),
         ]
+
+        // formatters.push(
+        //     e => (
+        //         <IconButton onClick={e => this.previewVoucher(e)} > <AttachIcon /></IconButton >
+        //     )
+        // )
+
+        formatters.push(
+            e => (
+                <PageviewIcon  onClick={c => this.previewVoucher(e)} />
+            )
+        )
 
         return formatters;
     }
+
 
 
     render() {
@@ -193,7 +296,7 @@ class PaymentSearcher extends Component {
                     fetchedItems={fetchedvoucherPayments}
                     errorItems={errorvoucherPayments}
                     contributionKey={NOTICE_SEARCHER_CONTRIBUTION_KEY}
-                    tableTitle={formatMessageWithValues(intl, "webapp", "Voucher", { count })}
+                    tableTitle={formatMessageWithValues(intl, "webapp", "paymentSummaries", { count })}
                     rowsPerPageOptions={this.rowsPerPageOptions}
                     defaultPageSize={this.defaultPageSize}
                     fetch={this.fetch}
