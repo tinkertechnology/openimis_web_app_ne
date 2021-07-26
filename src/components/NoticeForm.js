@@ -175,3 +175,6 @@ export default withHistory(withModulesManager(connect(mapStateToProps, mapDispat
         withStyles(styles)(NoticeForm)
     ))))
 );
+// export default withHistory(withModulesManager(connect(mapStateToProps,mapDispatchToProps, { fetchNotices})(
+//     injectIntl(withTheme(withStyles(styles)(NoticeForm))
+//     ))));
