@@ -5,8 +5,11 @@ import { injectIntl } from 'react-intl';
 import {
     withModulesManager, formatMessageWithValues, formatDateFromISO, formatMessage,
     withHistory, 
-    Searcher, decodeId
+    Searcher, decodeId,
 } from "@openimis/fe-core";
+import {
+    Container, Divider, Grid, Paper
+} from "@material-ui/core";
 import { fetchTemporaryRegistration } from "../actions";
 import RegistrationFilter from "./RegistrationFilter";
 
@@ -14,7 +17,7 @@ import PageviewIcon from '@material-ui/icons/Pageview';
 import CloseIcon from '@material-ui/icons/Close';
 import ZoomInIcon from '@material-ui/icons/ZoomIn';
 import ZoomOutIcon from '@material-ui/icons/ZoomOut';
-import { pink } from '@material-ui/core/colors';
+
 
 
 const REGISTRATION_SEARCHER_CONTRIBUTION_KEY = "webapp.RegistrationSearcher";
@@ -108,16 +111,6 @@ function getUrlParameterRegistrationPage(sParam) {
                       <ZoomInIcon onClick={e => this.changeScale(0.1)} />
                       <ZoomOutIcon onClick={e => this.changeScale(-0.1)} />
                       <CloseIcon onClick={e => this.hide()} />  
-                      <Grid item xs={6}>
-                          <Paper>
-                          <Grid container>
-                              <Grid item>
-                              <Button class="btn btn-primary">Approve</Button>
-                              
-                              </Grid>
-                          </Grid>
-                          </Paper>
-                      </Grid>
                  </center>  
           </div>
   
@@ -183,7 +176,7 @@ class RegistrationSearcher extends Component {
             .filter(f => !!state.filters[f]['filter'])
             .map(f => state.filters[f]['filter']);
 
-        prms.push( `first: 10`);
+        prms.push( `first: ${state.pageSize}`);
         if (!!state.afterCursor) {
             prms.push(`after: "${state.afterCursor}"`)
         }
@@ -312,7 +305,7 @@ class RegistrationSearcher extends Component {
 
         return (
             <Fragment>
-                {/* <ProgressOrError progress={fetchingTempRegs} error={errorTempRegs} /> */}
+                
                 <AttachmentsDialogPreview iframesrc={this.state.iframesrc} hide={this.previewVoucherCloseFn}/>
                 <Searcher
                     module="webapp"

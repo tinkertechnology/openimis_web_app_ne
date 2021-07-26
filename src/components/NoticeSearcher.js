@@ -63,7 +63,7 @@ class NoticeSearcher extends Component {
         // prms.push(`title_Icontains: ${this.state.edited.title==null ? `""`: `"${this.state.edited.title}"`}`);
         // prms.push( `first: ${this.state.pageSize}`);
 
-        prms.push( `first: 10`);
+        prms.push( `first: ${state.pageSize}`);
         if (!!state.afterCursor) {
             prms.push(`after: "${state.afterCursor}"`)
         }

@@ -2,6 +2,8 @@ import React, { Component, Fragment } from "react";
 import { injectIntl } from 'react-intl';
 import { connect } from "react-redux";
 import { withTheme, withStyles } from "@material-ui/core/styles";
+import { bindActionCreators } from "redux";
+
 
 import {
     formatMessageWithValues, withModulesManager, withHistory, historyPush, journalize,
@@ -10,7 +12,7 @@ import {
 
 import NoticeMasterPanel from "../components/NoticeMasterPanel";
 
-import { fetchNotices } from "../actions";
+import { createNotice, updateNotice, getNotice } from "../actions";
 
 const styles = theme => ({
     page: theme.page,
@@ -40,8 +42,8 @@ class NoticeForm extends Component {
         if (!!this.props.notice_id) {
             this.setState(
                 (state, props) => ({ notice_id: props.notice_id }),
-                e => this.props.fetchNotices(
-                    this.props.modulesManager,
+                e => this.props.getNotice(
+                    // this.props.modulesManager,
                     this.props.notice_id
                 )
             )
@@ -160,8 +162,16 @@ const mapStateToProps = (state, props) => ({
     notice: state.webapp.notice,
     submittingMutation: state.webapp.submittingMutation,
     mutation: state.webapp.mutation,
+    
 })
 
-export default withHistory(withModulesManager(connect(mapStateToProps, { fetchNotices})(
-    injectIntl(withTheme(withStyles(styles)(NoticeForm))
-    ))));
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({createNotice, updateNotice, getNotice, journalize}, dispatch);
+}
+
+
+export default withHistory(withModulesManager(connect(mapStateToProps, mapDispatchToProps)(
+    injectIntl(withTheme(
+        withStyles(styles)(NoticeForm)
+    ))))
+);

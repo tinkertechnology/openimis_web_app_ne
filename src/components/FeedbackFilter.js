@@ -83,7 +83,7 @@ class FeedbackFilter extends Component {
                     </Grid>                    
                 } />
 
-                <ControlledField module="webapp" id="feedbackFilter.email" field={
+                {/* <ControlledField module="webapp" id="feedbackFilter.email" field={
                     <Grid item xs={3} className={classes.item}>
                         <TextInput
                             module="webapp" label="feedback.email"
@@ -115,7 +115,7 @@ class FeedbackFilter extends Component {
                             ])}
                         />
                     </Grid>                    
-                } />                
+                } />                 */}
                 <Contributions filters={filters} onChangeFilters={onChangeFilters} contributionKey={FEEDBACK_FILTER_CONTRIBUTION_KEY} />
             </Grid>
         )

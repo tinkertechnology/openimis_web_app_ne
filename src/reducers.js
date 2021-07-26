@@ -232,7 +232,7 @@ function reducer(
                 case "CREATE_NOTICE_ERR":
                     return dispatchMutationErr(state,action);
                 case "CREATE_NOTICE_RESP":
-                    return dispatchMutationResp(state, "", action);
+                    return dispatchMutationResp(state, "createNotice", action);
 
                      
         

@@ -77,7 +77,7 @@ class PaymentFilter extends Component {
                                 {
                                     id: 'chfid',
                                     value: v,
-                                    filter: `insuree_Chfid_Icontains: "${v}"`
+                                    filter: `insuree_ChfId_Icontains: "${v}"`
                                 }
                             ])}
                         />

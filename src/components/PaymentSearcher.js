@@ -135,6 +135,7 @@ class PaymentSearcher extends Component {
     rowIdentifier = (r) => r.id
 
     filtersToQueryParams = (state) => {
+        console.log('state', state.pageSize);
         let prms = Object.keys(state.filters)
             .filter(f => !!state.filters[f]['filter'])
             .map(f => state.filters[f]['filter']);
@@ -145,7 +146,7 @@ class PaymentSearcher extends Component {
         // prms.push(`title_Icontains: ${this.state.edited.title==null ? `""`: `"${this.state.edited.title}"`}`);
         // prms.push( `first: ${this.state.pageSize}`);
 
-        prms.push( `first: 10`);
+        prms.push( `first: ${state.pageSize}`);
         if (!!state.afterCursor) {
             prms.push(`after: "${state.afterCursor}"`)
         }

@@ -22,7 +22,7 @@
 
     "webapp.paymentSummaries": "{count} Payment's Request Found",
     "webapp.payment.chfid": "CHFID",
-    "webapp.payment.insureename": "Insuree Name",
+    "webapp.payment.insureename": "Insuree last Name",
     "webapp.payment.code": "Code",
     "webapp.payment.name": "Voucher",
 

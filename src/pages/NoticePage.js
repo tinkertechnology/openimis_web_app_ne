@@ -21,18 +21,17 @@ class NoticePage extends Component {
     }
 
     save = (notice) => {
+        console.log('notice.....',notice);
         if (!notice.id) {
             this.props.createNotice(
-                this.props.modulesManager,
-                notice,
-                formatMessageWithValues(
-                    this.props.intl,
-                    "notice",
-                    "CreateNotice.mutationLabel",
-                    { label: !!notice.title ? notice.title : "" }
+                notice    
                 )
-            );
+            
+            
         } else {
+            console.log('notice--edit',notice)
+            this.props.updateNotice(notice);
+            return
             this.props.updateNotice(
                 this.props.modulesManager,
                 notice,

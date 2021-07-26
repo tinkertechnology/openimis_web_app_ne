@@ -31,7 +31,7 @@ class WebappMainMenu extends Component {
             {
                 text: "Registrations",
                 icon: <SupervisorAccount />,
-                route: "/webapp/registrations"
+                route: "/webapp/registrations?previewDomain=http://oi.tinker.com.np"
             },
                          
         );
