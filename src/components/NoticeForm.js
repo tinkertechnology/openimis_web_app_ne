@@ -3,7 +3,7 @@ import { injectIntl } from 'react-intl';
 import { connect } from "react-redux";
 import { withTheme, withStyles } from "@material-ui/core/styles";
 import { bindActionCreators } from "redux";
-
+import AlertDialog from "./dialog";
 
 import {
     formatMessageWithValues, withModulesManager, withHistory, historyPush, journalize,
@@ -75,8 +75,10 @@ class NoticeForm extends Component {
             document.title = formatMessageWithValues(this.props.intl, "webapp", "noticeForm.title", { label: 'WebApp Notice'}) //insureeLabel(this.state.insuree) })
             this.setState({ notice: this._newNotice(), newNotice: true, lockNew: false, notice_id: null });
         } else if (prevProps.submittingMutation && !this.props.submittingMutation) {
-            this.props.journalize(this.props.mutation);
+            // this.props.journalize(this.props.mutation);
             this.setState({ reset: this.state.reset + 1 });
+            // AlertDialog()
+            window.location.reload();
         }
     }
 
@@ -119,14 +121,14 @@ class NoticeForm extends Component {
 
     render() {
         const {
-            notice_id, fetchingNotices, fetchedNotices, errorNotices,
+            notice_id, fetchingNotices, fetchedNotices, errorNotices, submittingMutation,
             add, save,
         } = this.props;
         const { notice } = this.state;
 
         return (
             <Fragment>
-                <ProgressOrError progress={fetchingNotices} error={errorNotices} />
+                <ProgressOrError progress={submittingMutation} error={errorNotices} />
                 {((!!fetchedNotices && !!notice && notice.id === notice_id) || !notice_id) &&
                     (
                         <Form
@@ -166,7 +168,7 @@ const mapStateToProps = (state, props) => ({
 })
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({createNotice, updateNotice, getNotice, journalize}, dispatch);
+    return bindActionCreators({createNotice, updateNotice, getNotice}, dispatch);
 }
 
 
